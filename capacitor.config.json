@@ -1,0 +1,12 @@
+{
+  "appId": "com.campusfix.app",
+  "appName": "CampusFix",
+  "webDir": "www",
+  "server": {
+    "url": "https://REPLACE-WITH-YOUR-LIVE-URL.onrender.com",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CampusFix - Admin Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #222;
+            color: white;
+            padding: 15px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+
+            background: white;
+            color: #222;
+
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* MAIN */
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* WELCOME */
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* COLORS */
+
+        .total {
+            border-top: 5px solid #222;
+        }
+
+        .pending {
+            border-top: 5px solid #ffc107;
+        }
+
+        .progress {
+            border-top: 5px solid #0d6efd;
+        }
+
+        .resolved {
+            border-top: 5px solid #198754;
+        }
+
+        /* COMPLAINTS */
+
+        .complaints-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .complaints-header h2 {
+            margin: 0;
+        }
+
+        .refresh-btn {
+            padding: 10px 16px;
+
+            border: none;
+            border-radius: 6px;
+
+            background: #222;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        /* CARD */
+
+        .complaint-card {
+            background: white;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .complaint-card h3 {
+            margin-top: 0;
+        }
+
+        .info {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .description {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            background: #f4f4f4;
+
+            border-radius: 6px;
+        }
+
+        /* STATUS */
+
+        .status {
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-progress {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status-resolved {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        /* CONTROLS */
+
+        .controls {
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+        }
+
+        .status-select {
+            padding: 9px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+        }
+
+        .update-btn {
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #0d6efd;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #dc3545;
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        /* MESSAGE */
+
+        #message {
+            margin: 15px 0;
+
+            font-weight: bold;
+        }
+
+        .loading,
+        .empty {
+            background: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+            color: #777;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 20px;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        CampusFix 🚀
+    </h1>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</header>
+
+
+<main>
+
+
+    <div class="welcome">
+
+        <h2 id="welcome">
+            Admin Dashboard 👨‍💼
+        </h2>
+
+        <p>
+            Manage student complaints and update their status.
+        </p>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat-card total">
+
+            <h3>
+                📋 Total Complaints
+            </h3>
+
+            <div
+                class="stat-number"
+                id="total">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card pending">
+
+            <h3>
+                🟡 Pending
+            </h3>
+
+            <div
+                class="stat-number"
+                id="pending">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card progress">
+
+            <h3>
+                🔵 In Progress
+            </h3>
+
+            <div
+                class="stat-number"
+                id="inProgress">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card resolved">
+
+            <h3>
+                🟢 Resolved
+            </h3>
+
+            <div
+                class="stat-number"
+                id="resolved">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPLAINTS -->
+
+    <div class="complaints-header">
+
+        <h2>
+            📋 All Complaints
+        </h2>
+
+        <button
+            class="refresh-btn"
+            onclick="loadDashboard()">
+
+            🔄 Refresh
+
+        </button>
+
+    </div>
+
+
+    <p id="message"></p>
+
+
+    <div id="complaintsContainer">
+
+        <div class="loading">
+            Loading complaints...
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+// =====================================================
+// API
+// =====================================================
+
+const API_URL = "";  // relative - works locally and once deployed
+
+
+// =====================================================
+// LOGIN DATA
+// =====================================================
+
+const token =
+    localStorage.getItem(
+        "campusfixToken"
+    );
+
+
+const userData =
+    localStorage.getItem(
+        "campusfixUser"
+    );
+
+
+// =====================================================
+// CHECK LOGIN
+// =====================================================
+
+if (!token || !userData) {
+
+    alert(
+        "Please login first."
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// =====================================================
+// USER DATA
+// =====================================================
+
+let user;
+
+try {
+
+    user =
+        JSON.parse(userData);
+
+} catch (error) {
+
+    localStorage.clear();
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// =====================================================
+// CHECK ADMIN
+// =====================================================
+
+if (
+    !user ||
+    user.role !== "admin"
+) {
+
+    alert(
+        "Admin access required ❌"
+    );
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+// =====================================================
+// WELCOME
+// =====================================================
+
+if (user && user.name) {
+
+    document
+        .getElementById("welcome")
+        .innerText =
+        "Welcome, " +
+        user.name +
+        " 👨‍💼";
+
+}
+
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+function logout() {
+
+    localStorage.removeItem(
+        "campusfixToken"
+    );
+
+    localStorage.removeItem(
+        "campusfixUser"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+// =====================================================
+// LOAD DASHBOARD
+// =====================================================
+
+async function loadDashboard() {
+
+    await loadStats();
+
+    await loadComplaints();
+
+}
+
+
+// =====================================================
+// LOAD STATS
+// =====================================================
+
+async function loadStats() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/admin/stats`,
+                {
+
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Could not load stats"
+            );
+
+        }
+
+
+        document
+            .getElementById("total")
+            .innerText =
+            data.total;
+
+
+        document
+            .getElementById("pending")
+            .innerText =
+            data.pending;
+
+
+        document
+            .getElementById("inProgress")
+            .innerText =
+            data.inProgress;
+
+
+        document
+            .getElementById("resolved")
+            .innerText =
+            data.resolved;
+
+
+    } catch (error) {
+
+        console.error(
+            "Stats Error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD ALL COMPLAINTS
+// =====================================================
+
+async function loadComplaints() {
+
+    const container =
+        document.getElementById(
+            "complaintsContainer"
+        );
+
+
+    container.innerHTML =
+        `<div class="loading">
+            Loading complaints...
+        </div>`;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/admin/complaints`,
+                {
+
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Could not load complaints"
+            );
+
+        }
+
+
+        const complaints =
+            data.complaints || [];
+
+
+        if (
+            complaints.length === 0
+        ) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    📭 No complaints found.
+                </div>`;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            "";
+
+
+        complaints.forEach(
+            function(complaint) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "complaint-card";
+
+
+                let statusClass =
+                    "status-pending";
+
+
+                if (
+                    complaint.status ===
+                    "In Progress"
+                ) {
+
+                    statusClass =
+                        "status-progress";
+
+                }
+
+
+                if (
+                    complaint.status ===
+                    "Resolved"
+                ) {
+
+                    statusClass =
+                        "status-resolved";
+
+                }
+
+
+                const student =
+                    complaint.createdBy || {};
+
+
+                const studentName =
+                    student.name ||
+                    "Unknown Student";
+
+
+                const studentEmail =
+                    student.email ||
+                    "Unknown Email";
+
+
+                const date =
+                    complaint.createdAt
+                        ? new Date(
+                            complaint.createdAt
+                        ).toLocaleString()
+                        : "Unknown";
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        📝 ${escapeHTML(
+                            complaint.title
+                        )}
+                    </h3>
+
+
+                    <div class="info">
+
+                        👤
+                        <strong>Student:</strong>
+
+                        ${escapeHTML(
+                            studentName
+                        )}
+
+                    </div>
+
+
+                    <div class="info">
+
+                        📧
+                        <strong>Email:</strong>
+
+                        ${escapeHTML(
+                            studentEmail
+                        )}
+
+                    </div>
+
+
+                    <div class="info">
+
+                        📂
+                        <strong>Category:</strong>
+
+                        ${escapeHTML(
+                            complaint.category
+                        )}
+
+                    </div>
+
+
+                    <div class="info">
+
+                        📍
+                        <strong>Location:</strong>
+
+                        ${escapeHTML(
+                            complaint.location
+                        )}
+
+                    </div>
+
+
+                    <div class="info">
+
+                        ⚡
+                        <strong>Priority:</strong>
+
+                        ${escapeHTML(
+                            complaint.priority
+                        )}
+
+                    </div>
+
+
+                    <div class="info">
+
+                        📊
+                        <strong>Status:</strong>
+
+                        <span class="status ${statusClass}">
+
+                            ${getStatusIcon(
+                                complaint.status
+                            )}
+
+                            ${escapeHTML(
+                                complaint.status
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        📅
+                        <strong>Submitted:</strong>
+
+                        ${date}
+
+                    </div>
+
+
+                    <div class="description">
+
+                        <strong>
+                            Description:
+                        </strong>
+
+                        <br><br>
+
+                        ${escapeHTML(
+                            complaint.description
+                        )}
+
+                    </div>
+
+
+                    <div class="controls">
+
+                        <select
+                            class="status-select"
+                            id="status-${complaint._id}">
+
+                            <option
+                                value="Pending"
+                                ${complaint.status === "Pending"
+                                    ? "selected"
+                                    : ""}>
+
+                                🟡 Pending
+
+                            </option>
+
+                            <option
+                                value="In Progress"
+                                ${complaint.status === "In Progress"
+                                    ? "selected"
+                                    : ""}>
+
+                                🔵 In Progress
+
+                            </option>
+
+                            <option
+                                value="Resolved"
+                                ${complaint.status === "Resolved"
+                                    ? "selected"
+                                    : ""}>
+
+                                🟢 Resolved
+
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            class="update-btn"
+                            onclick="updateStatus(
+                                '${complaint._id}'
+                            )">
+
+                            Update Status
+
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteComplaint(
+                                '${complaint._id}'
+                            )">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Complaints Error:",
+            error
+        );
+
+
+        container.innerHTML =
+            `<div class="empty">
+
+                ❌ ${escapeHTML(
+                    error.message
+                )}
+
+            </div>`;
+
+    }
+
+}
+
+
+// =====================================================
+// UPDATE STATUS
+// =====================================================
+
+async function updateStatus(
+    complaintId
+) {
+
+    const select =
+        document.getElementById(
+            `status-${complaintId}`
+        );
+
+
+    const status =
+        select.value;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/admin/complaints/${complaintId}/status`,
+                {
+
+                    method:
+                        "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status:
+                                status
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Status update failed"
+            );
+
+        }
+
+
+        alert(
+            "Complaint status updated ✅"
+        );
+
+
+        await loadDashboard();
+
+
+    } catch (error) {
+
+        console.error(
+            "Update Status Error:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// DELETE COMPLAINT
+// =====================================================
+
+async function deleteComplaint(
+    complaintId
+) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this complaint?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/api/admin/complaints/${complaintId}`,
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Delete failed"
+            );
+
+        }
+
+
+        alert(
+            "Complaint deleted successfully ✅"
+        );
+
+
+        await loadDashboard();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete Error:",
+            error
+        );
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// STATUS ICON
+// =====================================================
+
+function getStatusIcon(
+    status
+) {
+
+    if (
+        status ===
+        "Pending"
+    ) {
+
+        return "🟡";
+
+    }
+
+
+    if (
+        status ===
+        "In Progress"
+    ) {
+
+        return "🔵";
+
+    }
+
+
+    if (
+        status ===
+        "Resolved"
+    ) {
+
+        return "🟢";
+
+    }
+
+
+    return "⚪";
+
+}
+
+
+// =====================================================
+// SECURITY
+// =====================================================
+
+function escapeHTML(text) {
+
+    if (
+        text === null ||
+        text === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// =====================================================
+// START
+// =====================================================
+
+loadDashboard();
+
+</script>
+
+
+</body>
+
+</html>

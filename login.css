@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: Arial, sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: #f5f7fb;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+.login-container {
+
+    width: 900px;
+
+    min-height: 550px;
+
+    background: white;
+
+    display: flex;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+
+/* LEFT */
+
+.login-left {
+
+    width: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    padding: 60px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.login-left h1 {
+
+    font-size: 34px;
+
+    margin-bottom: 80px;
+}
+
+
+.login-left h2 {
+
+    font-size: 32px;
+
+    margin-bottom: 18px;
+}
+
+
+.login-left p {
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+    margin-bottom: 35px;
+
+    opacity: 0.9;
+}
+
+
+.login-left a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+/* LOGIN BOX */
+
+.login-box {
+
+    width: 50%;
+
+    padding: 60px 50px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.login-box h2 {
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+
+.subtitle {
+
+    color: #777;
+
+    margin-bottom: 35px;
+}
+
+
+label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+
+input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+input:focus {
+
+    border-color: #2563eb;
+}
+
+
+button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: #2563eb;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+button:hover {
+
+    background: #1d4ed8;
+}
+
+
+.register-text {
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+.register-text a {
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .login-container {
+
+        width: 95%;
+    }
+
+    .login-left {
+
+        display: none;
+    }
+
+    .login-box {
+
+        width: 100%;
+
+        padding: 45px 30px;
+    }
+
+}
