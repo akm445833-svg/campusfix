@@ -21,3 +21,7 @@
     "mongoose": "^9.9.3"
   }
 }
+ {
+  "start": "node server.js",
+  "create-admin": "node createAdmin.js"
+}
