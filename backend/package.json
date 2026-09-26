@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "create-admin": "node createAdmin.js",
@@ -20,8 +20,4 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.3"
   }
-}
- {
-  "start": "node server.js",
-  "create-admin": "node createAdmin.js"
 }

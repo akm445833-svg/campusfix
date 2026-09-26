@@ -9,6 +9,7 @@ const path = require("path");
 
 const User = require("./models/user");
 const Complaint = require("./models/Complaint");
+const Chat = require("./models/chat");
 
 const app = express();
 
@@ -1088,6 +1089,201 @@ app.get(
 
         }
 
+    }
+);
+
+
+// =====================================================
+// GET ADMIN INFO - for chat
+// =====================================================
+
+app.get(
+    "/api/admin/info",
+    authenticateToken,
+    requireAdmin,
+    async (req, res) => {
+
+        try {
+
+            const admin = await User.findById(req.user.id).select("-password");
+
+            res.json({ admin: admin });
+
+        } catch (error) {
+
+            res.status(500).json({
+                message: "Could not fetch admin info"
+            });
+
+        }
+    }
+);
+
+
+// =====================================================
+// GET USERS (for finding admins to chat with)
+// =====================================================
+
+app.get(
+    "/api/users",
+    authenticateToken,
+    async (req, res) => {
+
+        try {
+
+            const users = await User.find({ role: "admin" }).select("-password");
+
+            res.json({ users: users });
+
+        } catch (error) {
+
+            res.status(500).json({
+                message: "Could not fetch users"
+            });
+
+        }
+    }
+);
+
+
+// =====================================================
+// SEND MESSAGE - CHAT
+// =====================================================
+
+app.post(
+    "/api/chat",
+    authenticateToken,
+    async (req, res) => {
+
+        try {
+
+            const { receiverId, message } = req.body;
+
+            if (!receiverId || !message || !message.trim()) {
+                return res.status(400).json({
+                    message: "Please provide a receiver and message"
+                });
+            }
+
+            const chat = new Chat({
+                sender: req.user.id,
+                receiver: receiverId,
+                message: message.trim(),
+                isAI: false
+            });
+
+            await chat.save();
+
+            res.status(201).json({
+                message: "Message sent successfully",
+                chat: chat
+            });
+
+        } catch (error) {
+            console.log("Send Message Error ❌");
+            console.log(error.message);
+            res.status(500).json({
+                message: "Failed to send message"
+            });
+        }
+    }
+);
+
+
+// =====================================================
+// GET MESSAGES - CHAT
+// =====================================================
+
+app.get(
+    "/api/chat/:otherUserId",
+    authenticateToken,
+    async (req, res) => {
+
+        try {
+
+            const otherUserId = req.params.otherUserId;
+
+            const messages = await Chat.find({
+                $or: [
+                    { sender: req.user.id, receiver: otherUserId },
+                    { sender: otherUserId, receiver: req.user.id }
+                ]
+            })
+                .populate("sender", "name")
+                .populate("receiver", "name")
+                .sort({ createdAt: 1 });
+
+            res.json({
+                messages: messages
+            });
+
+        } catch (error) {
+            console.log("Get Messages Error ❌");
+            console.log(error.message);
+            res.status(500).json({
+                message: "Could not load messages"
+            });
+        }
+    }
+);
+
+
+// =====================================================
+// AI ASSISTANT RESPONSE
+// =====================================================
+
+app.post(
+    "/api/chat/ai",
+    authenticateToken,
+    async (req, res) => {
+
+        try {
+
+            const { message } = req.body;
+
+            if (!message || !message.trim()) {
+                return res.status(400).json({
+                    message: "Please provide a message"
+                });
+            }
+
+            // Save user message
+            const aiReply =
+                "I'm an AI assistant for CampusFix. I can help answer frequently asked questions about reporting complaints, checking status, and campus services. For specific issues, please contact the admin. Your message was: " +
+                message.trim().substring(0, 50) +
+                "...";
+
+            const aiChat = new Chat({
+                sender: req.user.id,
+                receiver: req.user.id,
+                message: message.trim(),
+                isAI: true
+            });
+
+            await aiChat.save();
+
+            // Save AI response
+            const aiResponse = new Chat({
+                sender: req.user.id,
+                receiver: req.user.id,
+                message: aiReply,
+                isAI: true
+            });
+
+            await aiResponse.save();
+
+            res.json({
+                reply: aiReply,
+                chat: aiResponse
+            });
+
+        } catch (error) {
+            console.log("AI Chat Error ❌");
+            console.log(error.message);
+            res.status(500).json({
+                message: "AI assistant unavailable"
+            });
+        }
     }
 );
 
