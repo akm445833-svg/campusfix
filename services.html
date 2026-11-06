@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1f38">
+    <title>Campus services · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="app-body" data-page="services" data-title-key="nav.services" data-active-nav="nav.services">
+
+<div class="app-shell">
+    <aside class="sidebar" id="appSidebar" aria-label="Sidebar navigation"></aside>
+
+    <div class="app-frame">
+        <header class="topbar" id="appTopbar"></header>
+
+        <main class="page" id="main">
+            <div class="page-head">
+                <div>
+                    <span class="eyebrow" data-i18n="nav.services">Campus services</span>
+                    <h1 data-i18n="services.title">Book spaces. Recover what was lost.</h1>
+                    <p data-i18n="services.subtitle">Reserve campus facilities and browse the shared Lost &amp; Found board.</p>
+                </div>
+                <div class="page-head-actions">
+                    <a class="btn btn-secondary" id="operationsLink" href="admin.html?tab=operations" hidden>
+                        <span data-icon="sliders" aria-hidden="true"></span>
+                        <span data-i18n="services.operations">Operations desk</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="tabs" role="tablist" aria-label="Campus services">
+                <button type="button" class="tab is-active" role="tab" id="tab-facilities" data-service-tab="facilities" aria-controls="panel-facilities" aria-selected="true">
+                    <span data-icon="calendar" aria-hidden="true"></span>
+                    <span data-i18n="services.facilitiesTab">Facility booking</span>
+                </button>
+                <button type="button" class="tab" role="tab" id="tab-lost-found" data-service-tab="lost-found" aria-controls="panel-lost-found" aria-selected="false" tabindex="-1">
+                    <span data-icon="search" aria-hidden="true"></span>
+                    <span data-i18n="services.lostFoundTab">Lost &amp; Found</span>
+                </button>
+            </div>
+
+            <section class="tab-panel" id="panel-facilities" role="tabpanel" aria-labelledby="tab-facilities" data-service-panel="facilities">
+                <section class="panel" aria-labelledby="facilityListTitle">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="facilityListTitle" data-i18n="services.facilitiesTitle">Bookable facilities</h2>
+                            <p data-i18n="services.facilitiesSubtitle">Requests are reviewed by the facility's department.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="openBookingButton">
+                            <span data-icon="calendar-plus" aria-hidden="true"></span>
+                            <span data-i18n="services.bookFacility">Book a facility</span>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="facility-grid" id="facilityGrid" aria-live="polite" aria-busy="true"></div>
+                    </div>
+                </section>
+
+                <section class="panel" aria-labelledby="myBookingsTitle">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="myBookingsTitle" data-i18n="services.myBookings">My booking requests</h2>
+                            <p id="myBookingsCount" aria-live="polite" data-i18n="common.loading">Loading…</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm" id="refreshBookings">
+                            <span data-icon="refresh" aria-hidden="true"></span>
+                            <span data-i18n="common.refresh">Refresh</span>
+                        </button>
+                    </div>
+                    <div class="panel-body" id="bookingList" aria-live="polite" aria-busy="true"></div>
+                </section>
+            </section>
+
+            <section class="tab-panel" id="panel-lost-found" role="tabpanel" aria-labelledby="tab-lost-found" data-service-panel="lost-found" hidden>
+                <section class="panel" aria-labelledby="lostFoundTitle">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="lostFoundTitle" data-i18n="services.lostFoundTitle">Lost &amp; Found board</h2>
+                            <p id="lostFoundCount" aria-live="polite" data-i18n="common.loading">Loading…</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="openLostFoundButton">
+                            <span data-icon="plus" aria-hidden="true"></span>
+                            <span data-i18n="services.reportItem">Report an item</span>
+                        </button>
+                    </div>
+
+                    <div class="toolbar" role="search">
+                        <label class="search-field">
+                            <span class="sr-only" data-i18n="common.search">Search</span>
+                            <span data-icon="search" aria-hidden="true"></span>
+                            <input type="search" id="lostFoundSearch" data-i18n-placeholder="services.lostFoundSearch" autocomplete="off">
+                        </label>
+                        <label class="sr-only" for="lostFoundType" data-i18n="services.itemType">Item type</label>
+                        <select id="lostFoundType">
+                            <option value="" data-i18n="services.allTypes">All types</option>
+                            <option value="lost" data-i18n="services.typeLost">Lost</option>
+                            <option value="found" data-i18n="services.typeFound">Found</option>
+                        </select>
+                        <label class="sr-only" for="lostFoundStatus" data-i18n="common.status">Status</label>
+                        <select id="lostFoundStatus">
+                            <option value="" data-i18n="services.allStatuses">All statuses</option>
+                            <option value="open" data-i18n="services.statusOpen">Open</option>
+                            <option value="claimed" data-i18n="services.statusClaimed">Claimed</option>
+                            <option value="closed" data-i18n="services.statusClosed">Closed</option>
+                        </select>
+                    </div>
+
+                    <div class="panel-body" id="lostFoundList" aria-live="polite" aria-busy="true"></div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <div class="sidebar-scrim" data-shell-scrim aria-hidden="true"></div>
+</div>
+
+<dialog id="bookingDialog" aria-labelledby="bookingDialogTitle">
+    <form class="dialog-form" id="bookingForm" novalidate>
+        <div class="dialog-header">
+            <div>
+                <h2 id="bookingDialogTitle" data-i18n="services.bookingTitle">Request a facility</h2>
+                <p data-i18n="services.bookingSubtitle">Your request is sent to the facility's department for approval.</p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-icon" data-close-booking data-i18n-aria-label="common.close" aria-label="Close">
+                <span data-icon="close" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="dialog-body">
+            <div class="field">
+                <label for="bookingFacility" data-i18n="services.facilityLabel">Facility</label>
+                <select id="bookingFacility" name="facilityId" required></select>
+                <span class="field-hint" id="bookingFacilityHint"></span>
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field">
+                <label for="bookingTitle" data-i18n="services.eventTitle">Event or purpose title</label>
+                <input type="text" id="bookingTitle" name="title" maxlength="200" autocomplete="off" required data-i18n-placeholder="services.eventTitlePlaceholder">
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="bookingStart" data-i18n="services.startTime">Starts at</label>
+                    <input type="datetime-local" id="bookingStart" name="startsAt" required>
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                    <label for="bookingEnd" data-i18n="services.endTime">Ends at</label>
+                    <input type="datetime-local" id="bookingEnd" name="endsAt" required>
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="bookingAttendees" data-i18n="services.attendees">Expected attendees</label>
+                <input type="number" id="bookingAttendees" name="attendees" min="1" max="100000" step="1" value="1" required>
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field">
+                <label for="bookingPurpose" data-i18n="services.purpose">Additional details</label>
+                <textarea id="bookingPurpose" name="purpose" maxlength="2000" data-i18n-placeholder="services.purposePlaceholder"></textarea>
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+        </div>
+
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-secondary" data-close-booking data-i18n="common.cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="bookingSubmit">
+                <span data-icon="calendar-plus" aria-hidden="true"></span>
+                <span data-i18n="services.submitBooking">Request booking</span>
+            </button>
+        </div>
+    </form>
+</dialog>
+
+<dialog id="lostFoundDialog" aria-labelledby="lostFoundDialogTitle">
+    <form class="dialog-form" id="lostFoundForm" novalidate>
+        <div class="dialog-header">
+            <div>
+                <h2 id="lostFoundDialogTitle" data-i18n="services.reportTitle">Report a lost or found item</h2>
+                <p data-i18n="services.reportSubtitle">Share enough detail that the owner can identify the item.</p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-icon" data-close-lost-found data-i18n-aria-label="common.close" aria-label="Close">
+                <span data-icon="close" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="dialog-body">
+            <div class="field-row">
+                <div class="field">
+                    <label for="lostFoundFormType" data-i18n="services.itemType">Item type</label>
+                    <select id="lostFoundFormType" name="type" required>
+                        <option value="lost" data-i18n="services.typeLost">Lost</option>
+                        <option value="found" data-i18n="services.typeFound">Found</option>
+                    </select>
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                    <label for="lostFoundCategory" data-i18n="services.category">Category</label>
+                    <input type="text" id="lostFoundCategory" name="category" maxlength="80" value="Other" data-i18n-placeholder="services.categoryPlaceholder">
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="lostFoundFormTitle" data-i18n="services.itemTitle">Item title</label>
+                <input type="text" id="lostFoundFormTitle" name="title" maxlength="200" required data-i18n-placeholder="services.itemTitlePlaceholder">
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field">
+                <label for="lostFoundDescription" data-i18n="services.description">Description</label>
+                <textarea id="lostFoundDescription" name="description" maxlength="2000" required data-i18n-placeholder="services.descriptionPlaceholder"></textarea>
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="lostFoundLocation" data-i18n="services.location">Location</label>
+                    <input type="text" id="lostFoundLocation" name="location" maxlength="200" required data-i18n-placeholder="services.locationPlaceholder">
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                    <label for="lostFoundOccurred" data-i18n="services.occurredAt">When</label>
+                    <input type="datetime-local" id="lostFoundOccurred" name="occurredAt">
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="lostFoundContact" data-i18n="services.contact">Contact for this item</label>
+                <input type="text" id="lostFoundContact" name="contact" maxlength="320" data-i18n-placeholder="services.contactPlaceholder">
+                <span class="field-hint" data-i18n="services.contactHint">Optional. Visible to signed-in campus members only.</span>
+                <span class="field-error" aria-live="polite"></span>
+            </div>
+        </div>
+
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-secondary" data-close-lost-found data-i18n="common.cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="lostFoundSubmit">
+                <span data-icon="plus" aria-hidden="true"></span>
+                <span data-i18n="services.postItem">Post item</span>
+            </button>
+        </div>
+    </form>
+</dialog>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/shell.js" defer></script>
+<script src="js/services.js" defer></script>
+</body>
+</html>

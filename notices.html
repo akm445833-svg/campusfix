@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1f38">
+    <title>Notices · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="app-body" data-page="notices" data-title-key="nav.notices" data-active-nav="nav.notices">
+
+<div class="app-shell">
+    <aside class="sidebar" id="appSidebar" aria-label="Sidebar navigation"></aside>
+
+    <div class="app-frame">
+        <header class="topbar" id="appTopbar"></header>
+
+        <main class="page" id="main">
+            <div class="page-head">
+                <div>
+                    <span class="eyebrow" data-i18n="nav.notices">Notices</span>
+                    <h1 data-i18n="notices.title">Campus notices</h1>
+                    <p data-i18n="notices.subtitle">Official announcements from your campus administration.</p>
+                </div>
+                <div class="page-head-actions">
+                    <a class="btn btn-secondary" id="manageNotices" href="admin.html?tab=notices" hidden>
+                        <span data-icon="megaphone" aria-hidden="true"></span>
+                        <span data-i18n="notices.manage">Manage notices</span>
+                    </a>
+                </div>
+            </div>
+
+            <section class="panel" aria-labelledby="noticeBoardTitle">
+                <div class="panel-header">
+                    <div>
+                        <h2 id="noticeBoardTitle" data-i18n="notices.boardTitle">Notice board</h2>
+                        <p id="noticeCount" aria-live="polite" data-i18n="common.loading">Loading…</p>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" id="refreshNotices">
+                        <span data-icon="refresh" aria-hidden="true"></span>
+                        <span data-i18n="common.refresh">Refresh</span>
+                    </button>
+                </div>
+
+                <div class="toolbar" role="search">
+                    <label class="search-field">
+                        <span class="sr-only" data-i18n="common.search">Search</span>
+                        <span data-icon="search" aria-hidden="true"></span>
+                        <input type="search" id="noticeSearch" data-i18n-placeholder="notices.searchPlaceholder" autocomplete="off">
+                    </label>
+
+                    <label class="sr-only" for="noticeAudienceFilter" data-i18n="notices.filterAudience">All audiences</label>
+                    <select id="noticeAudienceFilter" data-i18n-aria-label="notices.audience" aria-label="Audience"></select>
+                </div>
+
+                <div class="panel-body" id="noticesContainer" aria-live="polite" aria-busy="true"></div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/shell.js" defer></script>
+<script src="js/notices.js" defer></script>
+</body>
+</html>

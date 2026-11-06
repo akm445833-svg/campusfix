@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1f38">
+    <title>CampusFix - Offline</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .offline-page {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.18), transparent 42%),
+                linear-gradient(160deg, #0b1f38 0%, #12325a 58%, #0b1f38 100%);
+        }
+
+        .offline-card {
+            width: min(520px, 100%);
+            padding: clamp(28px, 6vw, 46px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: 0 30px 80px rgba(3, 12, 28, 0.45);
+            text-align: center;
+        }
+
+        .offline-mark {
+            display: grid;
+            place-items: center;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 22px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(29, 78, 216, 0.35);
+        }
+
+        .offline-mark svg {
+            width: 34px;
+            height: 34px;
+        }
+
+        .offline-card h1 {
+            margin: 0 0 12px;
+            color: #0b1f38;
+            font-size: clamp(1.5rem, 4vw, 1.9rem);
+            letter-spacing: -0.02em;
+        }
+
+        .offline-card p {
+            margin: 0 auto 10px;
+            max-width: 40ch;
+            color: #536174;
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .offline-card .offline-hindi {
+            color: #6b7788;
+            font-size: 0.86rem;
+        }
+
+        .offline-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 26px;
+        }
+
+        .offline-note {
+            margin-top: 26px;
+            padding-top: 18px;
+            border-top: 1px solid #e6ebf2;
+            color: #77859a;
+            font-size: 0.76rem;
+            line-height: 1.6;
+        }
+
+        .offline-note a {
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="offline-page">
+
+    <main class="offline-card" role="main">
+        <span class="offline-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"></path>
+                <path d="M5 21V7l7-4 7 4v14"></path>
+                <path d="M9 21v-5h6v5"></path>
+                <path d="M9 11h.01M15 11h.01"></path>
+                <path d="M15.5 15.5l1.5 1.5 3-3"></path>
+            </svg>
+        </span>
+
+        <h1>You&rsquo;re offline</h1>
+        <p>The connection dropped before CampusFix could load this page. Your account and any saved reports are safe.</p>
+        <p class="offline-hindi" lang="hi">आप ऑफ़लाइन हैं। कनेक्शन लौटते ही पेज दोबारा खोलें।</p>
+
+        <div class="offline-actions">
+            <a class="btn btn-primary" href="./dashboard.html">Try again</a>
+            <a class="btn btn-secondary" href="./index.html">Go to home</a>
+        </div>
+
+        <p class="offline-note">
+            Offline mode only stores the CampusFix interface on this device. Messages, reports, and account details are never cached.<br>
+            Need help? Visit the <a href="./help.html">help center</a> once you reconnect.
+        </p>
+    </main>
+
+</body>
+
+</html>

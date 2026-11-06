@@ -1,239 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CampusFix - Register</title>
-
-    <link rel="stylesheet" href="login.css">
-
+    <meta name="theme-color" content="#0b1f38">
+    <title>Create account · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
 </head>
 
+<body class="auth-body">
 
-<body>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
 
-    <div class="login-container">
+<div class="auth-split">
+    <aside class="auth-panel">
+        <a class="auth-panel-brand" href="index.html">
+            <span class="brand-mark" data-icon="campus" aria-hidden="true"></span>
+            <span data-public-college>CampusFix</span>
+        </a>
 
-        <div class="login-left">
+        <div class="auth-panel-copy">
+            <span class="eyebrow" data-i18n="auth.panelEyebrow">Campus services, connected</span>
+            <h1 data-i18n="auth.panelTitle">A clearer way to take care of campus.</h1>
+            <p data-i18n="auth.panelBody"></p>
 
-            <h1>CampusFix</h1>
+            <ul class="auth-points">
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point1"></span></li>
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point2"></span></li>
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point3"></span></li>
+            </ul>
+        </div>
 
-            <h2>Join CampusFix 🚀</h2>
+        <div class="auth-panel-quote">
+            <p data-i18n="auth.quote"></p>
+            <span data-i18n="auth.quoteBy"></span>
+        </div>
+    </aside>
 
-            <p>
-                Create your account and help make
-                your college campus better.
-            </p>
-
-            <a href="index.html">
-                ← Back to Home
+    <main class="auth-main" id="main">
+        <div class="auth-main-top">
+            <a class="btn btn-ghost btn-sm" href="index.html">
+                <span data-icon="arrow-left" aria-hidden="true"></span>
+                <span data-i18n="auth.backHome">Back to home</span>
             </a>
-
+            <button type="button" class="lang-toggle" id="authLanguage" data-i18n-aria-label="nav.toggleLanguage" aria-label="Switch language">
+                <span data-icon="globe" aria-hidden="true"></span>
+                <span id="authLanguageLabel">EN</span>
+            </button>
         </div>
 
+        <div class="auth-main-center">
+            <div class="auth-card">
+                <h1 data-i18n="auth.registerTitle">Create your account</h1>
+                <p data-i18n="auth.registerSubtitle">Student accounts can submit and follow campus complaints.</p>
 
-        <div class="login-box">
+                <div class="auth-error" id="registerError" role="alert" aria-live="assertive">
+                    <span data-icon="alert-circle" aria-hidden="true"></span>
+                    <span id="registerErrorText"></span>
+                </div>
 
-            <h2>Create Account</h2>
+                <form id="registerForm" novalidate>
+                    <div class="field">
+                        <label for="registerName" data-i18n="auth.name">Full name</label>
+                        <input
+                            type="text"
+                            id="registerName"
+                            name="name"
+                            autocomplete="name"
+                            maxlength="120"
+                            required
+                            data-i18n-placeholder="auth.namePlaceholder"
+                            placeholder="Your full name">
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
-            <p class="subtitle">
-                Register as a student
-            </p>
+                    <div class="field">
+                        <label for="registerEmail" data-i18n="auth.email">Email address</label>
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            name="email"
+                            autocomplete="email"
+                            inputmode="email"
+                            maxlength="254"
+                            required
+                            data-i18n-placeholder="auth.emailPlaceholder"
+                            placeholder="you@college.edu">
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
+                    <div class="field">
+                        <label for="registerPassword" data-i18n="auth.password">Password</label>
+                        <div class="password-toggle">
+                            <input
+                                type="password"
+                                id="registerPassword"
+                                name="password"
+                                autocomplete="new-password"
+                                maxlength="200"
+                                minlength="6"
+                                required
+                                data-i18n-placeholder="auth.passwordPlaceholder"
+                                placeholder="Create a password">
+                            <button type="button" data-password-toggle aria-label="Show password"></button>
+                        </div>
+                        <span class="field-hint" data-i18n="auth.passwordHint">Use at least 6 characters.</span>
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
-            <form id="registerForm">
+                    <div class="field">
+                        <label for="registerConfirm" data-i18n="auth.confirmPassword">Confirm password</label>
+                        <div class="password-toggle">
+                            <input
+                                type="password"
+                                id="registerConfirm"
+                                name="confirmPassword"
+                                autocomplete="new-password"
+                                maxlength="200"
+                                required
+                                data-i18n-placeholder="auth.confirmPassword"
+                                placeholder="Repeat your password">
+                            <button type="button" data-password-toggle aria-label="Show password"></button>
+                        </div>
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
-                <label for="name">
-                    Full Name
-                </label>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="registerSubmit">
+                        <span data-i18n="auth.createButton">Create account</span>
+                        <span data-icon="arrow-right" aria-hidden="true"></span>
+                    </button>
+                </form>
 
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your full name"
-                    required
-                >
+                <p class="auth-switch">
+                    <span data-i18n="auth.haveAccount">Already have an account?</span>
+                    <a href="login.html" data-i18n="auth.signInLink">Sign in</a>
+                </p>
 
+                <p class="field-hint" style="display:block;text-align:center;margin-top:12px" data-i18n="auth.registerNote">
+                    Staff and administrator accounts are assigned by your campus administrator.
+                </p>
 
-                <label for="email">
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Minimum 6 characters"
-                    required
-                >
-
-
-                <label for="confirmPassword">
-                    Confirm Password
-                </label>
-
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm your password"
-                    required
-                >
-
-
-                <button type="submit">
-                    Create Account
-                </button>
-
-            </form>
-
-
-            <p class="register-text">
-
-                Already have an account?
-
-                <a href="login.html">
-                    Login
-                </a>
-
-            </p>
-
+                <div class="auth-footer">
+                    <a href="help.html" data-i18n="landing.footerHelp">Help center</a>
+                    <span data-i18n="auth.accessHelp">Need access help? Contact your campus administrator.</span>
+                </div>
+            </div>
         </div>
+    </main>
+</div>
 
-    </div>
-
-
-    <script>
-
-        document
-            .getElementById("registerForm")
-            .addEventListener("submit", async function (event) {
-
-                event.preventDefault();
-
-
-                const name =
-                    document.getElementById("name").value.trim();
-
-                const email =
-                    document.getElementById("email").value.trim();
-
-                const password =
-                    document.getElementById("password").value;
-
-                const confirmPassword =
-                    document.getElementById("confirmPassword").value;
-
-                const submitButton =
-                    event.currentTarget.querySelector(
-                        "button[type=submit]"
-                    );
-
-
-                // Check password length
-
-                if (password.length < 6) {
-
-                    alert("Password must be at least 6 characters.");
-
-                    return;
-                }
-
-
-                // Check password match
-
-                if (password !== confirmPassword) {
-
-                    alert("Passwords do not match.");
-
-                    return;
-                }
-
-
-                try {
-
-                    submitButton.disabled = true;
-
-                    const response = await fetch(
-                        "/api/register",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                name: name,
-                                email: email,
-                                password: password
-                            })
-                        }
-                    );
-
-
-                    const data = await response.json();
-
-
-                    // Registration successful
-
-                    if (response.ok) {
-
-                        alert("Account created successfully! ✅");
-
-                        window.location.href = "login.html";
-
-                    }
-
-                    // Registration failed
-
-                    else {
-
-                        alert(
-                            data.message ||
-                            "Registration failed ❌"
-                        );
-
-                    }
-
-
-                }
-
-                catch (error) {
-
-                    console.log("Registration Error:", error);
-
-                    alert(
-                        "Cannot connect to server ❌"
-                    );
-
-                }
-
-                finally {
-
-                    submitButton.disabled = false;
-
-                }
-
-            });
-
-    </script>
-
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/register.js" defer></script>
 
 </body>
-
 </html>

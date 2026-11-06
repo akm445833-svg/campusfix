@@ -1,1189 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CampusFix - Dashboard</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #222;
-        }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        header {
-            background: #222;
-            color: white;
-            padding: 15px 30px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        header button {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            background: white;
-            color: #222;
-            font-weight: bold;
-        }
-
-        header button:hover {
-            opacity: 0.85;
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        main {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-
-        /* =========================
-           COMPLAINT FORM
-        ========================= */
-
-        .complaint-form {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-top: 25px;
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .complaint-form h2 {
-            margin-top: 0;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 11px;
-
-            border: 1px solid #ccc;
-            border-radius: 6px;
-
-            font-size: 15px;
-        }
-
-        textarea {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            margin-top: 20px;
-
-            padding: 12px 20px;
-
-            border: none;
-            border-radius: 6px;
-
-            background: #222;
-            color: white;
-
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .submit-btn:hover {
-            opacity: 0.85;
-        }
-
-        #message {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        /* =========================
-           MY COMPLAINTS
-        ========================= */
-
-        .complaints-section {
-            margin-top: 35px;
-        }
-
-        .complaints-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            margin-bottom: 15px;
-        }
-
-        .complaints-header h2 {
-            margin: 0;
-        }
-
-        .refresh-btn {
-            padding: 9px 15px;
-
-            border: none;
-            border-radius: 6px;
-
-            background: #222;
-            color: white;
-
-            cursor: pointer;
-        }
-
-        .refresh-btn:hover {
-            opacity: 0.85;
-        }
-
-        /* =========================
-           COMPLAINT CARD
-        ========================= */
-
-        .complaint-card {
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            margin-bottom: 15px;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .complaint-card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .complaint-info {
-            margin: 7px 0;
-            color: #555;
-        }
-
-        .complaint-description {
-            margin-top: 12px;
-            padding: 12px;
-
-            background: #f5f5f5;
-
-            border-radius: 6px;
-        }
-
-        /* =========================
-           STATUS
-        ========================= */
-
-        .status {
-            display: inline-block;
-
-            padding: 6px 10px;
-
-            border-radius: 20px;
-
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-progress {
-            background: #cfe2ff;
-            color: #084298;
-        }
-
-        .status-resolved {
-            background: #d1e7dd;
-            color: #0f5132;
-        }
-
-        /* =========================
-           PRIORITY
-        ========================= */
-
-        .priority {
-            font-weight: bold;
-        }
-
-        .priority-high {
-            color: #dc3545;
-        }
-
-        .priority-medium {
-            color: #fd7e14;
-        }
-
-        .priority-low {
-            color: #198754;
-        }
-
-        /* =========================
-           EMPTY MESSAGE
-        ========================= */
-
-        .empty-message {
-            background: white;
-
-            padding: 25px;
-
-            border-radius: 10px;
-
-            text-align: center;
-
-            color: #777;
-        }
-
-        /* =========================
-           LOADING
-        ========================= */
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #777;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 600px) {
-
-            header {
-                padding: 15px;
-            }
-
-            header h1 {
-                font-size: 20px;
-            }
-
-            main {
-                padding: 15px;
-            }
-
-            .complaints-header {
-                align-items: flex-start;
-                gap: 10px;
-                flex-direction: column;
-            }
-
-        }
-
-    </style>
-
+    <meta name="theme-color" content="#0b1f38">
+    <title>Dashboard · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
-<body>
-
-
-<!-- =========================
-     HEADER
-========================= -->
-
-<header>
-
-    <h1>
-        CampusFix 🚀
-    </h1>
-
-    <button onclick="logout()">
-        Logout
-    </button>
-
-</header>
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main>
-
-
-    <h2 id="welcome">
-        Welcome 👋
-    </h2>
-
-    <p>
-        Report campus problems and track your complaints.
-    </p>
-
-
-    <!-- =========================
-         COMPLAINT FORM
-    ========================= -->
-
-    <div class="complaint-form">
-
-        <h2>
-            📝 Report a Campus Problem
-        </h2>
-
-
-        <form id="complaintForm">
-
-
-            <!-- TITLE -->
-
-            <label for="title">
-                Problem Title
-            </label>
-
-            <input
-                type="text"
-                id="title"
-                placeholder="Example: Fan is not working"
-                required
-            >
-
-
-            <!-- CATEGORY -->
-
-            <label for="category">
-                Category
-            </label>
-
-            <select id="category" required>
-
-                <option value="">
-                    Select Category
-                </option>
-
-                <option value="Electricity">
-                    💡 Electricity
-                </option>
-
-                <option value="Water">
-                    🚰 Water
-                </option>
-
-                <option value="Cleanliness">
-                    🧹 Cleanliness
-                </option>
-
-                <option value="Wi-Fi">
-                    📶 Wi-Fi
-                </option>
-
-                <option value="Classroom">
-                    🏫 Classroom
-                </option>
-
-                <option value="Library">
-                    📚 Library
-                </option>
-
-                <option value="Hostel">
-                    🏠 Hostel
-                </option>
-
-                <option value="Washroom">
-                    🚽 Washroom
-                </option>
-
-                <option value="Security">
-                    🛡️ Security
-                </option>
-
-                <option value="Canteen">
-                    🍴 Canteen
-                </option>
-
-                <option value="Other">
-                    ⚙️ Other
-                </option>
-
-            </select>
-
-
-            <!-- DESCRIPTION -->
-
-            <label for="description">
-                Description
-            </label>
-
-            <textarea
-                id="description"
-                placeholder="Describe the problem..."
-                required
-            ></textarea>
-
-
-            <!-- LOCATION -->
-
-            <label for="location">
-                Location
-            </label>
-
-            <input
-                type="text"
-                id="location"
-                placeholder="Example: Room 204"
-                required
-            >
-
-
-            <!-- PRIORITY -->
-
-            <label for="priority">
-                Priority
-            </label>
-
-            <select id="priority">
-
-                <option value="Low">
-                    Low
-                </option>
-
-                <option value="Medium" selected>
-                    Medium
-                </option>
-
-                <option value="High">
-                    High
-                </option>
-
-            </select>
-
-
-            <!-- SUBMIT -->
-
-            <button
-                type="submit"
-                class="submit-btn"
-            >
-                Submit Complaint
-            </button>
-
-
-        </form>
-
-
-        <p id="message"></p>
-
-    </div>
-
-
-    <!-- =========================
-         MY COMPLAINTS
-    ========================= -->
-
-    <div class="complaints-section">
-
-
-        <div class="complaints-header">
-
-            <h2>
-                📋 My Complaints
-            </h2>
-
-            <button
-                class="refresh-btn"
-                onclick="loadComplaints()"
-            >
-                🔄 Refresh
-            </button>
-
-        </div>
-
-
-        <div id="complaintsContainer">
-
-            <div class="loading">
-                Loading complaints...
+<body class="app-body" data-page="dashboard" data-roles="student" data-title-key="nav.dashboard">
+
+<div class="app-shell">
+    <aside class="sidebar" id="appSidebar" aria-label="Sidebar navigation"></aside>
+
+    <div class="app-frame">
+        <header class="topbar" id="appTopbar"></header>
+
+        <main class="page" id="main">
+            <div class="page-head">
+                <div>
+                    <span class="eyebrow" data-i18n="nav.dashboard">Dashboard</span>
+                    <h1 id="welcomeHeading">Welcome</h1>
+                    <p data-i18n="dashboard.subtitle">Here is what is happening with your campus reports today.</p>
+                </div>
+                <div class="page-head-actions">
+                    <button type="button" class="btn btn-primary" id="newComplaintButton">
+                        <span data-icon="plus" aria-hidden="true"></span>
+                        <span data-i18n="dashboard.newComplaint">New complaint</span>
+                    </button>
+                </div>
             </div>
 
-        </div>
+            <div class="kpi-grid" aria-label="Complaint summary">
+                <div class="panel kpi" style="--kpi-tint: var(--brand-50); --kpi-color: var(--brand-600)">
+                    <div class="kpi-top">
+                        <span data-i18n="dashboard.total">Total complaints</span>
+                        <span class="kpi-icon" data-icon="tickets" aria-hidden="true"></span>
+                    </div>
+                    <div class="kpi-value" id="summaryTotal" aria-busy="true">—</div>
+                    <div class="kpi-meta" data-i18n="dashboard.myComplaintsSubtitle">Every report you have submitted, newest first</div>
+                </div>
 
+                <div class="panel kpi" style="--kpi-tint: var(--info-50); --kpi-color: var(--info-600)">
+                    <div class="kpi-top">
+                        <span data-i18n="dashboard.open">Open</span>
+                        <span class="kpi-icon" data-icon="activity" aria-hidden="true"></span>
+                    </div>
+                    <div class="kpi-value" id="summaryOpen" aria-busy="true">—</div>
+                    <div class="kpi-meta" data-i18n="dashboard.openMeta">Pending, assigned, in progress or reopened</div>
+                </div>
 
+                <div class="panel kpi" style="--kpi-tint: var(--success-50); --kpi-color: var(--success-600)">
+                    <div class="kpi-top">
+                        <span data-i18n="dashboard.resolved">Resolved</span>
+                        <span class="kpi-icon" data-icon="check-circle" aria-hidden="true"></span>
+                    </div>
+                    <div class="kpi-value" id="summaryResolved" aria-busy="true">—</div>
+                    <div class="kpi-meta" id="summaryResolvedMeta" data-i18n="dashboard.resolvedMeta">0 of 0 closed successfully</div>
+                </div>
+
+                <div class="panel kpi" style="--kpi-tint: var(--danger-50); --kpi-color: var(--danger-600)">
+                    <div class="kpi-top">
+                        <span data-i18n="dashboard.overdue">Overdue</span>
+                        <span class="kpi-icon" data-icon="alert-triangle" aria-hidden="true"></span>
+                    </div>
+                    <div class="kpi-value" id="summaryOverdue" aria-busy="true">—</div>
+                    <div class="kpi-meta" data-i18n="dashboard.overdueMeta">Outside the response target</div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <section class="panel" aria-labelledby="myComplaintsTitle">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="myComplaintsTitle" data-i18n="dashboard.myComplaints">My complaints</h2>
+                            <p data-i18n="dashboard.myComplaintsSubtitle">Every report you have submitted, newest first</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm" id="refreshComplaints">
+                            <span data-icon="refresh" aria-hidden="true"></span>
+                            <span data-i18n="common.refresh">Refresh</span>
+                        </button>
+                    </div>
+
+                    <div class="toolbar" role="search">
+                        <label class="search-field">
+                            <span class="sr-only" data-i18n="common.search">Search</span>
+                            <span data-icon="search" aria-hidden="true"></span>
+                            <input type="search" id="complaintSearch" data-i18n-placeholder="dashboard.searchPlaceholder" autocomplete="off">
+                        </label>
+
+                        <label class="sr-only" for="complaintStatus" data-i18n="common.status">Status</label>
+                        <select id="complaintStatus" aria-label="Filter by status">
+                            <option value="" data-i18n="dashboard.filterStatus">All statuses</option>
+                            <option value="Pending" data-i18n="status.Pending">Pending</option>
+                            <option value="Assigned" data-i18n="status.Assigned">Assigned</option>
+                            <option value="In Progress" data-i18n="status.In Progress">In progress</option>
+                            <option value="Resolved" data-i18n="status.Resolved">Resolved</option>
+                            <option value="Reopened" data-i18n="status.Reopened">Reopened</option>
+                            <option value="Rejected" data-i18n="status.Rejected">Rejected</option>
+                        </select>
+
+                        <label class="sr-only" for="complaintPriority" data-i18n="common.priority">Priority</label>
+                        <select id="complaintPriority" aria-label="Filter by priority">
+                            <option value="" data-i18n="dashboard.filterPriority">All priorities</option>
+                            <option value="Low" data-i18n="priority.Low">Low</option>
+                            <option value="Medium" data-i18n="priority.Medium">Medium</option>
+                            <option value="High" data-i18n="priority.High">High</option>
+                            <option value="Critical" data-i18n="priority.Critical">Critical</option>
+                        </select>
+
+                        <label class="sr-only" for="complaintSort" data-i18n="common.sort">Sort</label>
+                        <select id="complaintSort" aria-label="Sort complaints">
+                            <option value="newest" data-i18n="dashboard.sortNewest">Newest first</option>
+                            <option value="oldest" data-i18n="dashboard.sortOldest">Oldest first</option>
+                            <option value="priority" data-i18n="dashboard.sortPriority">Priority</option>
+                            <option value="due" data-i18n="dashboard.sortDue">Due date</option>
+                        </select>
+                    </div>
+
+                    <div id="complaintsContainer" aria-live="polite">
+                        <div class="skeleton-row"><span class="skeleton skeleton-line" style="width:32%"></span><span class="skeleton skeleton-line" style="width:12%;margin-left:auto"></span></div>
+                        <div class="skeleton-row"><span class="skeleton skeleton-line" style="width:58%"></span></div>
+                        <div class="skeleton-row"><span class="skeleton skeleton-line" style="width:42%"></span><span class="skeleton skeleton-line" style="width:18%;margin-left:auto"></span></div>
+                    </div>
+
+                    <div id="complaintsPagination"></div>
+                </section>
+
+                <div class="stack">
+                    <section class="panel" aria-labelledby="noticesPreviewTitle">
+                        <div class="panel-header">
+                            <div>
+                                <h2 id="noticesPreviewTitle" data-i18n="dashboard.noticesTitle">Campus notices</h2>
+                                <p data-i18n="dashboard.noticesSubtitle">Announcements relevant to you</p>
+                            </div>
+                            <a class="btn btn-ghost btn-sm" href="notices.html" data-i18n="common.viewAll">View all</a>
+                        </div>
+                        <div id="noticesPreview" style="padding:16px">
+                            <div class="skeleton-row"><span class="skeleton skeleton-line" style="width:65%"></span></div>
+                            <div class="skeleton-row"><span class="skeleton skeleton-line" style="width:84%"></span></div>
+                        </div>
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2 data-i18n="nav.main">Workspace</h2>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <button type="button" class="quick-action" id="quickNewComplaint">
+                                <span class="icon-wrap" data-icon="plus" aria-hidden="true"></span>
+                                <span data-i18n="dashboard.newComplaint">New complaint</span>
+                            </button>
+                            <a class="quick-action" href="chat.html">
+                                <span class="icon-wrap" data-icon="message" aria-hidden="true"></span>
+                                <span data-i18n="nav.messages">Messages</span>
+                            </a>
+                            <a class="quick-action" href="notices.html">
+                                <span class="icon-wrap" data-icon="megaphone" aria-hidden="true"></span>
+                                <span data-i18n="nav.notices">Notices</span>
+                            </a>
+                            <a class="quick-action" href="help.html">
+                                <span class="icon-wrap" data-icon="help" aria-hidden="true"></span>
+                                <span data-i18n="nav.help">Help</span>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
     </div>
 
-
-</main>
-
-
-<script>
-
-
-    // =========================================
-    // CAMPUSFIX SERVER
-    // =========================================
-
-    const API_URL = "";  // relative - works locally and once deployed
-
-
-    // =========================================
-    // LOGIN DATA
-    // =========================================
-
-    const token =
-        localStorage.getItem("campusfixToken");
-
-    const userData =
-        localStorage.getItem("campusfixUser");
-
-
-    // =========================================
-    // CHECK LOGIN
-    // =========================================
-
-    if (!token || !userData) {
-
-        alert("Please login first.");
-
-        window.location.href = "login.html";
-
-    }
-
-
-    let user;
-
-
-    try {
-
-        user = JSON.parse(userData);
-
-    } catch (error) {
-
-        console.error(
-            "User data error:",
-            error
-        );
-
-        localStorage.removeItem(
-            "campusfixToken"
-        );
-
-        localStorage.removeItem(
-            "campusfixUser"
-        );
-
-        window.location.href =
-            "login.html";
-
-    }
-
-
-    // =========================================
-    // WELCOME USER
-    // =========================================
-
-    if (user && user.name) {
-
-        document
-            .getElementById("welcome")
-            .innerText =
-            "Welcome, " + user.name + " 👋";
-
-    }
-
-
-    // =========================================
-    // LOGOUT
-    // =========================================
-
-    function logout() {
-
-        localStorage.removeItem(
-            "campusfixToken"
-        );
-
-        localStorage.removeItem(
-            "campusfixUser"
-        );
-
-        window.location.href =
-            "login.html";
-
-    }
-
-
-    // =========================================
-    // SUBMIT COMPLAINT
-    // =========================================
-
-    document
-        .getElementById("complaintForm")
-        .addEventListener(
-            "submit",
-            async function(event) {
-
-                event.preventDefault();
-
-
-                const title =
-                    document
-                        .getElementById("title")
-                        .value
-                        .trim();
-
-
-                const category =
-                    document
-                        .getElementById("category")
-                        .value;
-
-
-                const description =
-                    document
-                        .getElementById("description")
-                        .value
-                        .trim();
-
-
-                const location =
-                    document
-                        .getElementById("location")
-                        .value
-                        .trim();
-
-
-                const priority =
-                    document
-                        .getElementById("priority")
-                        .value;
-
-
-                const message =
-                    document
-                        .getElementById("message");
-
-                const submitButton =
-                    event.currentTarget.querySelector(
-                        "button[type=submit]"
-                    );
-
-
-                message.innerText =
-                    "Submitting complaint...";
-
-                message.style.color =
-                    "#222";
-
-                submitButton.disabled = true;
-
-
-                try {
-
-
-                    const response =
-                        await fetch(
-                            `${API_URL}/api/complaints`,
-                            {
-
-                                method: "POST",
-
-                                headers: {
-
-                                    "Content-Type":
-                                        "application/json",
-
-                                    "Authorization":
-                                        `Bearer ${token}`
-
-                                },
-
-                                body: JSON.stringify({
-
-                                    title: title,
-
-                                    category: category,
-
-                                    description:
-                                        description,
-
-                                    location: location,
-
-                                    priority: priority,
-
-                                    userId: user.id
-
-                                })
-
-                            }
-                        );
-
-
-                    let data = {};
-
-
-                    try {
-
-                        data =
-                            await response.json();
-
-                    } catch (error) {
-
-                        console.log(
-                            "Response is not JSON"
-                        );
-
-                    }
-
-
-                    if (response.ok) {
-
-
-                        message.innerText =
-                            "Complaint submitted successfully! ✅";
-
-                        message.style.color =
-                            "green";
-
-
-                        document
-                            .getElementById(
-                                "complaintForm"
-                            )
-                            .reset();
-
-
-                        // Reload complaints
-
-                        loadComplaints();
-
-
-                    } else {
-
-
-                        message.innerText =
-                            data.message ||
-                            "Complaint submission failed ❌";
-
-                        message.style.color =
-                            "red";
-
-                    }
-
-
-                } catch (error) {
-
-
-                    console.error(
-                        "Server Connection Error:",
-                        error
-                    );
-
-
-                    message.innerText =
-                        "Cannot connect to CampusFix server ❌";
-
-                    message.style.color =
-                        "red";
-
-                }
-
-                finally {
-
-                    submitButton.disabled = false;
-
-                }
-
-            }
-        );
-
-
-    // =========================================
-    // LOAD USER COMPLAINTS
-    // =========================================
-
-    async function loadComplaints() {
-
-
-        const container =
-            document.getElementById(
-                "complaintsContainer"
-            );
-
-
-        container.innerHTML =
-            `<div class="loading">
-                Loading complaints...
-            </div>`;
-
-
-        try {
-
-
-            const response =
-                await fetch(
-                    `${API_URL}/api/complaints/${user.id}`,
-                    {
-
-                        method: "GET",
-
-                        headers: {
-
-                            "Authorization":
-                                `Bearer ${token}`
-
-                        }
-
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                container.innerHTML =
-                    `<div class="empty-message">
-                        ❌ ${data.message ||
-                        "Could not load complaints"}
-                    </div>`;
-
-                return;
-
-            }
-
-
-            const complaints =
-                data.complaints || [];
-
-
-            // No complaints
-
-            if (complaints.length === 0) {
-
-                container.innerHTML =
-                    `<div class="empty-message">
-                        📭 You have not submitted any complaints yet.
-                    </div>`;
-
-                return;
-
-            }
-
-
-            // Clear container
-
-            container.innerHTML = "";
-
-
-            // Display complaints
-
-            complaints.forEach(
-                function(complaint) {
-
-
-                    const card =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    card.className =
-                        "complaint-card";
-
-
-                    // Status class
-
-                    let statusClass =
-                        "status-pending";
-
-
-                    if (
-                        complaint.status ===
-                        "In Progress"
-                    ) {
-
-                        statusClass =
-                            "status-progress";
-
-                    }
-
-
-                    if (
-                        complaint.status ===
-                        "Resolved"
-                    ) {
-
-                        statusClass =
-                            "status-resolved";
-
-                    }
-
-
-                    // Priority class
-
-                    let priorityClass =
-                        "priority-medium";
-
-
-                    if (
-                        complaint.priority ===
-                        "High"
-                    ) {
-
-                        priorityClass =
-                            "priority-high";
-
-                    }
-
-
-                    if (
-                        complaint.priority ===
-                        "Low"
-                    ) {
-
-                        priorityClass =
-                            "priority-low";
-
-                    }
-
-
-                    // Date
-
-                    let dateText =
-                        "Unknown date";
-
-
-                    if (complaint.createdAt) {
-
-                        dateText =
-                            new Date(
-                                complaint.createdAt
-                            ).toLocaleString();
-
-                    }
-
-
-                    card.innerHTML = `
-
-                        <h3>
-                            📝 ${escapeHTML(
-                                complaint.title
-                            )}
-                        </h3>
-
-
-                        <div class="complaint-info">
-
-                            📂
-                            <strong>Category:</strong>
-
-                            ${escapeHTML(
-                                complaint.category
-                            )}
-
-                        </div>
-
-
-                        <div class="complaint-info">
-
-                            📍
-                            <strong>Location:</strong>
-
-                            ${escapeHTML(
-                                complaint.location
-                            )}
-
-                        </div>
-
-
-                        <div class="complaint-info">
-
-                            ⚡
-                            <strong>Priority:</strong>
-
-                            <span class="priority ${priorityClass}">
-
-                                ${escapeHTML(
-                                    complaint.priority
-                                )}
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="complaint-info">
-
-                            📊
-                            <strong>Status:</strong>
-
-                            <span class="status ${statusClass}">
-
-                                ${getStatusIcon(
-                                    complaint.status
-                                )}
-
-                                ${escapeHTML(
-                                    complaint.status
-                                )}
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="complaint-info">
-
-                            📅
-                            <strong>Submitted:</strong>
-
-                            ${dateText}
-
-                        </div>
-
-
-                        <div class="complaint-description">
-
-                            <strong>
-                                Description:
-                            </strong>
-
-                            <br><br>
-
-                            ${escapeHTML(
-                                complaint.description
-                            )}
-
-                        </div>
-
-                    `;
-
-
-                    container.appendChild(
-                        card
-                    );
-
-
-                }
-            );
-
-
-        } catch (error) {
-
-
-            console.error(
-                "Load Complaints Error:",
-                error
-            );
-
-
-            container.innerHTML =
-                `<div class="empty-message">
-
-                    ❌ Cannot connect to CampusFix server.
-
-                </div>`;
-
-        }
-
-    }
-
-
-    // =========================================
-    // STATUS ICON
-    // =========================================
-
-    function getStatusIcon(status) {
-
-
-        if (status === "Pending") {
-
-            return "🟡";
-
-        }
-
-
-        if (status === "In Progress") {
-
-            return "🔵";
-
-        }
-
-
-        if (status === "Resolved") {
-
-            return "🟢";
-
-        }
-
-
-        return "⚪";
-
-    }
-
-
-    // =========================================
-    // SECURITY
-    // =========================================
-
-    function escapeHTML(text) {
-
-
-        if (text === null ||
-            text === undefined) {
-
-            return "";
-
-        }
-
-
-        return String(text)
-
-            .replace(/&/g, "&amp;")
-
-            .replace(/</g, "&lt;")
-
-            .replace(/>/g, "&gt;")
-
-            .replace(/"/g, "&quot;")
-
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    // =========================================
-    // LOAD COMPLAINTS WHEN PAGE OPENS
-    // =========================================
-
-    loadComplaints();
-
-
-</script>
-
+    <div class="sidebar-scrim" data-shell-scrim aria-hidden="true"></div>
+</div>
+
+<dialog id="complaintDialog" class="wide" aria-labelledby="complaintDialogTitle">
+    <form class="dialog-form" id="complaintForm" novalidate>
+        <div class="dialog-header">
+            <div>
+                <h2 id="complaintDialogTitle" data-i18n="dashboard.formTitle">Report a campus issue</h2>
+                <p data-i18n="dashboard.formSubtitle">Give the team enough detail to act quickly. You will get a reference number immediately.</p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-icon" data-close-complaint-dialog data-i18n-aria-label="common.close" aria-label="Close">
+                <span data-icon="close" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="dialog-body">
+            <div class="alert-item is-warning" id="duplicateBox" hidden>
+                <span class="alert-icon" data-icon="alert-triangle" aria-hidden="true"></span>
+                <div class="alert-copy">
+                    <strong data-i18n="dashboard.duplicateTitle">Is this already reported?</strong>
+                    <p data-i18n="dashboard.duplicateBody">These open complaints from your account look similar. Open one to follow it instead of creating a duplicate.</p>
+                    <div class="stack" id="duplicateList" style="gap:6px;margin-top:8px"></div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="complaintTitle" data-i18n="dashboard.title">Title</label>
+                <input type="text" id="complaintTitle" name="title" maxlength="200" autocomplete="off" required data-i18n-placeholder="dashboard.titlePlaceholder">
+                <div class="field-footer">
+                    <span class="field-error" aria-live="polite"></span>
+                    <span id="titleCount">0/200</span>
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="complaintCategory" data-i18n="dashboard.category">Category</label>
+                    <select id="complaintCategory" name="category" required>
+                        <option value="" data-i18n="dashboard.chooseCategory">Choose a category</option>
+                    </select>
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+
+                <div class="field">
+                    <label for="complaintLocation" data-i18n="dashboard.location">Location</label>
+                    <input type="text" id="complaintLocation" name="location" maxlength="500" autocomplete="off" required data-i18n-placeholder="dashboard.locationPlaceholder">
+                    <span class="field-error" aria-live="polite"></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="complaintDescription" data-i18n="dashboard.description">Description</label>
+                <textarea id="complaintDescription" name="description" maxlength="20000" required data-i18n-placeholder="dashboard.descriptionPlaceholder"></textarea>
+                <div class="field-footer">
+                    <span class="field-error" aria-live="polite"></span>
+                    <span id="descriptionCount">0/20000</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="dashboard.photoLabel">Photo (optional)</span>
+                <div class="photo-picker">
+                    <input type="file" id="complaintPhoto" accept="image/jpeg,image/png,image/webp" hidden>
+                    <button type="button" class="btn btn-secondary" id="choosePhotoButton">
+                        <span data-icon="camera" aria-hidden="true"></span>
+                        <span data-i18n="dashboard.photoChoose">Add a photo</span>
+                    </button>
+                    <span class="field-hint" id="photoHint" data-i18n="dashboard.photoHint">JPEG, PNG or WebP. Images are resized before upload and must be under 800 KB.</span>
+                </div>
+                <div class="photo-preview" id="photoPreview" hidden>
+                    <img id="photoPreviewImage" alt="" data-i18n-alt="dashboard.photoPreviewAlt">
+                    <button type="button" class="btn btn-ghost btn-icon" id="removePhotoButton" data-i18n-aria-label="dashboard.photoRemove" aria-label="Remove photo">
+                        <span data-icon="close" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <span class="field-error" id="photoError" aria-live="polite"></span>
+            </div>
+
+            <label class="checkbox-field">
+                <input type="checkbox" id="anonymousCheckbox" name="anonymous">
+                <span>
+                    <strong data-i18n="dashboard.anonymousLabel">Report anonymously</strong>
+                    <small data-i18n="dashboard.anonymousHint">Your name stays hidden from staff. You can still track and comment on the complaint.</small>
+                </span>
+            </label>
+
+            <div class="field">
+                <span class="field-label" data-i18n="dashboard.priority">Priority</span>
+                <div class="priority-options" role="radiogroup" aria-label="Priority">
+                    <label class="priority-option">
+                        <input type="radio" name="priority" value="Low">
+                        <span><span data-i18n="priority.Low">Low</span><small id="slaHintLow" data-i18n="dashboard.priorityLowHint">Up to 7 days</small></span>
+                    </label>
+                    <label class="priority-option">
+                        <input type="radio" name="priority" value="Medium" checked>
+                        <span><span data-i18n="priority.Medium">Medium</span><small id="slaHintMedium" data-i18n="dashboard.priorityMediumHint">Up to 3 days</small></span>
+                    </label>
+                    <label class="priority-option">
+                        <input type="radio" name="priority" value="High">
+                        <span><span data-i18n="priority.High">High</span><small id="slaHintHigh" data-i18n="dashboard.priorityHighHint">Within 24 hours</small></span>
+                    </label>
+                    <label class="priority-option">
+                        <input type="radio" name="priority" value="Critical">
+                        <span><span data-i18n="priority.Critical">Critical</span><small id="slaHintCritical" data-i18n="dashboard.priorityCriticalHint">Within 4 hours</small></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <span class="field-label" data-i18n="complaint.coordinates">Coordinates</span>
+                <div class="cluster">
+                    <button type="button" class="btn btn-secondary" id="useLocationButton">
+                        <span data-icon="map-pin" aria-hidden="true"></span>
+                        <span data-i18n="dashboard.useLocation">Use my location</span>
+                    </button>
+                    <span class="field-hint" id="geoStatus" data-i18n="dashboard.locationHelp">Optional. Coordinates help staff find the exact spot.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-secondary" data-close-complaint-dialog data-i18n="common.cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="complaintSubmit">
+                <span data-icon="send" aria-hidden="true"></span>
+                <span data-i18n="dashboard.submit">Submit complaint</span>
+            </button>
+        </div>
+    </form>
+</dialog>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/shell.js" defer></script>
+<script src="js/dashboard.js" defer></script>
 
 </body>
-
 </html>

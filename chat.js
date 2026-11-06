@@ -1,306 +1,300 @@
-// =====================================================
-// CAMPUSFIX CHAT
-// =====================================================
+(function () {
+    "use strict";
 
-const API_URL = ""; // relative - works locally and once deployed
+    const chatTitle = document.getElementById("chatTitle");
+    const messagesContainer = document.getElementById("chatMessages");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+    const adminButton = document.getElementById("adminBtn");
+    const aiButton = document.getElementById("aiBtn");
+    const dashboardButton = document.getElementById("dashboardButton");
 
+    let user = null;
+    let currentChatType = "admin";
+    let adminUserId = null;
+    let loadingMessages = false;
 
-// =====================================================
-// LOGIN DATA
-// =====================================================
+    function addMessage(options) {
+        const row = document.createElement("div");
+        row.className = "message";
 
-const token = localStorage.getItem("campusfixToken");
-const userData = localStorage.getItem("campusfixUser");
-
-let user;
-
-
-// =====================================================
-// CHECK LOGIN
-// =====================================================
-
-if (!token || !userData) {
-    alert("Please login first.");
-    window.location.href = "login.html";
-}
-
-try {
-    user = JSON.parse(userData);
-} catch (error) {
-    console.error("User data error:", error);
-    localStorage.removeItem("campusfixToken");
-    localStorage.removeItem("campusfixUser");
-    window.location.href = "login.html";
-}
-
-
-// =====================================================
-// WELCOME / PAGE TITLE
-// =====================================================
-
-document.getElementById("chatTitle").innerText = "👋 Welcome, " + user.name;
-
-
-// =====================================================
-// LOGOUT
-// =====================================================
-
-function goDashboard() {
-    window.location.href = "dashboard.html";
-}
-
-
-// =====================================================
-// CHAT STATE
-// =====================================================
-
-let currentChatType = "admin"; // "admin" or "ai"
-let adminUserId = null;
-let messagesContainer = document.getElementById("chatMessages");
-let chatForm = document.getElementById("chatForm");
-let chatInput = document.getElementById("chatInput");
-let chatTitle = document.getElementById("chatTitle");
-let adminBtn = document.getElementById("adminBtn");
-let aiBtn = document.getElementById("aiBtn");
-
-
-// =====================================================
-// SELECT CHAT TYPE
-// =====================================================
-
-async function selectChat(type) {
-    currentChatType = type;
-
-    if (type === "admin") {
-        adminBtn.classList.add("active");
-        aiBtn.classList.remove("active");
-        chatTitle.innerText = "👨‍💼 Chat with Admin";
-
-        // Fetch admin user ID
-        try {
-            const response = await fetch(`${API_URL}/api/users`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            if (response.ok && data.users && data.users.length > 0) {
-                adminUserId = data.users[0]._id;
-                await loadMessages();
-            }
-        } catch (error) {
-            console.error("Error fetching admin:", error);
+        if (options.mine) {
+            row.classList.add("mine");
         }
-    } else {
-        aiBtn.classList.add("active");
-        adminBtn.classList.remove("active");
-        chatTitle.innerText = "🤖 AI Assistant";
+
+        if (options.system) {
+            row.classList.add("system");
+        }
+
+        const bubble = document.createElement("div");
+        bubble.className = "message-bubble";
+
+        if (options.senderName) {
+            const sender = document.createElement("strong");
+            sender.textContent = options.senderName;
+            bubble.appendChild(sender);
+        }
+
+        const text = document.createElement("p");
+        text.textContent = options.text;
+        bubble.appendChild(text);
+
+        if (options.time) {
+            const time = document.createElement("span");
+            time.className = "message-time";
+            time.textContent = options.time;
+            bubble.appendChild(time);
+        }
+
+        row.appendChild(bubble);
+        messagesContainer.appendChild(row);
+        messagesContainer.scrollTop =
+            messagesContainer.scrollHeight;
+    }
+
+    function addSystemMessage(text) {
+        addMessage({ text, system: true });
+    }
+
+    function renderAdminMessages(messages) {
         messagesContainer.innerHTML = "";
-        addSystemMessage("AI Assistant is online. Type your question below!");
-    }
-}
 
-
-// =====================================================
-// LOAD MESSAGES
-// =====================================================
-
-async function loadMessages() {
-    if (!adminUserId || currentChatType !== "admin") return;
-
-    try {
-        const response = await fetch(
-            `${API_URL}/api/chat/${adminUserId}`,
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            }
-        );
-        const data = await response.json();
-
-        if (response.ok) {
-            messagesContainer.innerHTML = "";
-            data.messages.forEach(function(msg) {
-                appendMessage(msg);
-            });
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        if (messages.length === 0) {
+            addSystemMessage(
+                "No messages yet. Send a message to the admin."
+            );
+            return;
         }
-    } catch (error) {
-        console.error("Load Messages Error:", error);
-    }
-}
 
-
-// =====================================================
-// APPEND MESSAGE TO CHAT BOX
-// =====================================================
-
-function appendMessage(msg) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message";
-
-    if (msg.sender && msg.sender._id) {
-        // It's a populated message from server
-        const isMine = msg.sender._id === user.id ||
-                       msg.sender === user.id;
-        if (isMine) msgDiv.classList.add("mine");
-
-        const senderName = msg.sender.name || "You";
-        const time = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString() : "";
-
-        msgDiv.innerHTML = `
-            <div class="message-bubble">
-                <strong>${escapeHTML(senderName)}</strong>
-                <p>${escapeHTML(msg.message)}</p>
-                <span class="message-time">${time}</span>
-            </div>
-        `;
-    } else if (msg.isAI) {
-        msgDiv.classList.add("mine");
-        const time = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString() : "";
-        msgDiv.innerHTML = `
-            <div class="message-bubble">
-                <strong>🤖 AI</strong>
-                <p>${escapeHTML(msg.message)}</p>
-                <span class="message-time">${time}</span>
-            </div>
-        `;
-    } else {
-        const isMine = msg.sender === user.id;
-        if (isMine) msgDiv.classList.add("mine");
-        const time = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString() : "";
-        msgDiv.innerHTML = `
-            <div class="message-bubble">
-                <p>${escapeHTML(msg.message)}</p>
-                <span class="message-time">${time}</span>
-            </div>
-        `;
-    }
-
-    messagesContainer.appendChild(msgDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-
-// =====================================================
-// ADD SYSTEM MESSAGE
-// =====================================================
-
-function addSystemMessage(text) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message";
-    msgDiv.innerHTML = `
-        <div class="message-bubble" style="background:#e9ecef; text-align:center; font-style:italic;">
-            <p>${escapeHTML(text)}</p>
-        </div>
-    `;
-    messagesContainer.appendChild(msgDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-
-// =====================================================
-// SEND MESSAGE
-// =====================================================
-
-chatForm.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const message = chatInput.value.trim();
-    if (!message) return;
-
-    const submitBtn = chatForm.querySelector("button[type=submit]");
-    submitBtn.disabled = true;
-
-    // Optimistically add own message
-    const tempMsg = {
-        sender: user.id,
-        message: message,
-        isAI: false,
-        createdAt: new Date().toISOString()
-    };
-    appendMessage(tempMsg);
-    chatInput.value = "";
-
-    try {
-        if (currentChatType === "admin") {
-            const response = await fetch(`${API_URL}/api/chat`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    receiverId: adminUserId,
-                    message: message
-                })
+        messages.forEach(function (message) {
+            addMessage({
+                mine:
+                    message.sender &&
+                    message.sender.id === user.id,
+                senderName: message.sender
+                    ? message.sender.name
+                    : "Unknown",
+                text: message.message,
+                time: new Date(
+                    message.createdAt
+                ).toLocaleTimeString()
             });
+        });
+    }
 
-            if (response.ok) {
-                const data = await response.json();
-                // Reload messages to show the fresh ones
-                await loadMessages();
-            } else {
-                const data = await response.json();
-                addSystemMessage("Failed to send message: " + (data.message || "Unknown error"));
+    function renderAiMessages(messages) {
+        messagesContainer.innerHTML = "";
+
+        if (messages.length === 0) {
+            addSystemMessage(
+                "AI Assistant is online. Type your question below!"
+            );
+            return;
+        }
+
+        messages.forEach(function (message) {
+            addMessage({
+                mine: !message.isAI,
+                senderName: message.isAI
+                    ? "🤖 AI Assistant"
+                    : "You",
+                text: message.message,
+                time: new Date(
+                    message.createdAt
+                ).toLocaleTimeString()
+            });
+        });
+    }
+
+    async function loadAdminMessages() {
+        if (!adminUserId || loadingMessages) {
+            return;
+        }
+
+        loadingMessages = true;
+
+        try {
+            const data = await CampusFix.request(
+                "/chat/" + encodeURIComponent(adminUserId)
+            );
+            renderAdminMessages(data.messages || []);
+        } catch (error) {
+            messagesContainer.innerHTML = "";
+            addSystemMessage(
+                error.message || "Could not load messages."
+            );
+        } finally {
+            loadingMessages = false;
+        }
+    }
+
+    async function loadAiMessages() {
+        try {
+            const data = await CampusFix.request(
+                "/chat/ai/history"
+            );
+            renderAiMessages(data.messages || []);
+        } catch (error) {
+            messagesContainer.innerHTML = "";
+            addSystemMessage(
+                error.message || "Could not load AI chat."
+            );
+        }
+    }
+
+    async function findAdmin() {
+        const data = await CampusFix.request("/users");
+        const admins = data.users || [];
+
+        return admins.length > 0 ? admins[0].id : null;
+    }
+
+    async function selectChat(type) {
+        currentChatType = type;
+
+        if (type === "admin") {
+            adminButton.classList.add("active");
+            aiButton.classList.remove("active");
+            chatTitle.innerText = "👨‍💼 Chat with Admin";
+            messagesContainer.innerHTML =
+                '<div class="loading-inline">Loading messages...</div>';
+
+            try {
+                if (!adminUserId) {
+                    adminUserId = await findAdmin();
+                }
+
+                if (!adminUserId) {
+                    messagesContainer.innerHTML = "";
+                    addSystemMessage(
+                        "No administrator account is available yet."
+                    );
+                    return;
+                }
+
+                await loadAdminMessages();
+            } catch (error) {
+                messagesContainer.innerHTML = "";
+                addSystemMessage(
+                    error.message ||
+                        "Could not load the admin chat."
+                );
             }
         } else {
-            // AI Assistant
-            const response = await fetch(`${API_URL}/api/chat/ai`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({ message: message })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                await loadMessages();
-            } else {
-                const data = await response.json();
-                addSystemMessage("AI assistant unavailable: " + (data.message || "Unknown error"));
-            }
+            aiButton.classList.add("active");
+            adminButton.classList.remove("active");
+            chatTitle.innerText = "🤖 AI Assistant";
+            messagesContainer.innerHTML =
+                '<div class="loading-inline">Loading messages...</div>';
+            await loadAiMessages();
         }
-    } catch (error) {
-        console.error("Send Message Error:", error);
-        addSystemMessage("Cannot connect to server ❌");
     }
 
-    submitBtn.disabled = false;
-});
+    chatForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
+        const text = chatInput.value.trim();
 
-// =====================================================
-// SECURITY - HTML ESCAPE
-// =====================================================
+        if (!text) {
+            return;
+        }
 
-function escapeHTML(text) {
-    if (text === null || text === undefined) return "";
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+        const submitButton = chatForm.querySelector(
+            "button[type=submit]"
+        );
 
+        submitButton.disabled = true;
 
-// =====================================================
-// AUTO-REFRESH MESSAGES FOR ADMIN CHAT
-// =====================================================
+        try {
+            if (currentChatType === "admin") {
+                if (!adminUserId) {
+                    throw new Error(
+                        "No administrator account is available."
+                    );
+                }
 
-setInterval(function() {
-    if (currentChatType === "admin" && adminUserId) {
-        loadMessages();
-    }
-}, 5000);
+                await CampusFix.request("/chat", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        receiverId: adminUserId,
+                        message: text
+                    })
+                });
 
+                chatInput.value = "";
+                await loadAdminMessages();
+            } else {
+                const data = await CampusFix.request("/chat/ai", {
+                    method: "POST",
+                    body: JSON.stringify({ message: text })
+                });
 
-// =====================================================
-// DEFAULT: LOAD ADMIN CHAT ON PAGE START
-// =====================================================
+                chatInput.value = "";
 
-selectChat("admin");
+                if (data.chat) {
+                    if (messagesContainer.querySelector(
+                        ".loading-inline"
+                    )) {
+                        messagesContainer.innerHTML = "";
+                    }
+
+                    addMessage({
+                        mine: true,
+                        senderName: "You",
+                        text: text,
+                        time: new Date(
+                            data.chat.createdAt
+                        ).toLocaleTimeString()
+                    });
+                    addMessage({
+                        mine: false,
+                        senderName: "🤖 AI Assistant",
+                        text: data.reply,
+                        time: new Date(
+                            data.chat.createdAt
+                        ).toLocaleTimeString()
+                    });
+                } else {
+                    await loadAiMessages();
+                }
+            }
+        } catch (error) {
+            addSystemMessage(
+                error.message || "Could not send the message."
+            );
+        } finally {
+            submitButton.disabled = false;
+        }
+    });
+
+    adminButton.addEventListener("click", function () {
+        selectChat("admin");
+    });
+    aiButton.addEventListener("click", function () {
+        selectChat("ai");
+    });
+    dashboardButton.addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+    });
+
+    (async function start() {
+        user = await CampusFix.requireUser();
+
+        if (!user) {
+            return;
+        }
+
+        chatTitle.innerText = "👋 Welcome, " + user.name;
+        await selectChat("admin");
+
+        setInterval(function () {
+            if (
+                currentChatType === "admin" &&
+                adminUserId &&
+                !document.hidden
+            ) {
+                loadAdminMessages();
+            }
+        }, 5000);
+    })();
+})();

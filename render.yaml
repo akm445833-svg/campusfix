@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: campusfix-api
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: .
+    buildCommand: npm ci --omit=dev --prefix backend && npm --prefix backend run db:migrate
+    startCommand: node backend/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: TRUST_PROXY_HOPS
+        value: "2"
+      - key: DATABASE_POOL_MAX
+        value: "5"
+      - key: BCRYPT_ROUNDS
+        value: "12"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

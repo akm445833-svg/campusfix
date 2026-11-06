@@ -1,319 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>CampusFix - Login</title>
-
-    <link rel="stylesheet" href="login.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1f38">
+    <title>Sign in · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
 </head>
 
+<body class="auth-body">
 
-<body>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
 
-    <div class="login-container">
+<div class="auth-split">
+    <aside class="auth-panel">
+        <a class="auth-panel-brand" href="index.html">
+            <span class="brand-mark" data-icon="campus" aria-hidden="true"></span>
+            <span data-public-college>CampusFix</span>
+        </a>
 
-        <div class="login-left">
+        <div class="auth-panel-copy">
+            <span class="eyebrow" data-i18n="auth.panelEyebrow">Campus services, connected</span>
+            <h1 data-i18n="auth.panelTitle">A clearer way to take care of campus.</h1>
+            <p data-i18n="auth.panelBody"></p>
 
-            <h1>CampusFix</h1>
+            <ul class="auth-points">
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point1"></span></li>
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point2"></span></li>
+                <li><span data-icon="check-circle" aria-hidden="true"></span><span data-i18n="auth.point3"></span></li>
+            </ul>
+        </div>
 
-            <h2>Welcome Back 👋</h2>
+        <div class="auth-panel-quote">
+            <p data-i18n="auth.quote"></p>
+            <span data-i18n="auth.quoteBy"></span>
+        </div>
+    </aside>
 
-            <p>
-                Login to report campus problems and
-                track your complaints.
-            </p>
-
-            <a href="index.html">
-                ← Back to Home
+    <main class="auth-main" id="main">
+        <div class="auth-main-top">
+            <a class="btn btn-ghost btn-sm" href="index.html">
+                <span data-icon="arrow-left" aria-hidden="true"></span>
+                <span data-i18n="auth.backHome">Back to home</span>
             </a>
-
+            <button type="button" class="lang-toggle" id="authLanguage" data-i18n-aria-label="nav.toggleLanguage" aria-label="Switch language">
+                <span data-icon="globe" aria-hidden="true"></span>
+                <span id="authLanguageLabel">EN</span>
+            </button>
         </div>
 
+        <div class="auth-main-center">
+            <div class="auth-card">
+                <h1 data-i18n="auth.loginTitle">Welcome back</h1>
+                <p data-i18n="auth.loginSubtitle">Sign in with your campus account to continue.</p>
 
-        <div class="login-box">
+                <div class="auth-error" id="loginError" role="alert" aria-live="assertive">
+                    <span data-icon="alert-circle" aria-hidden="true"></span>
+                    <span id="loginErrorText"></span>
+                </div>
 
-            <h2>CampusFix Login</h2>
+                <form id="loginForm" novalidate>
+                    <div class="field">
+                        <label for="loginEmail" data-i18n="auth.email">Email address</label>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            autocomplete="email"
+                            inputmode="email"
+                            maxlength="254"
+                            required
+                            data-i18n-placeholder="auth.emailPlaceholder"
+                            placeholder="you@college.edu">
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
-            <p class="subtitle">
-                Login to your CampusFix account
-            </p>
+                    <div class="field">
+                        <label for="loginPassword" data-i18n="auth.password">Password</label>
+                        <div class="password-toggle">
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="password"
+                                autocomplete="current-password"
+                                maxlength="200"
+                                required
+                                data-i18n-placeholder="auth.passwordPlaceholder"
+                                placeholder="Enter your password">
+                            <button type="button" data-password-toggle aria-label="Show password"></button>
+                        </div>
+                        <span class="field-error" aria-live="polite"></span>
+                    </div>
 
+                    <div class="auth-meta">
+                        <span data-i18n="auth.privacyNote">Your session is protected with an HttpOnly cookie.</span>
+                    </div>
 
-            <form id="loginForm">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="loginSubmit">
+                        <span data-i18n="auth.signIn">Sign in</span>
+                        <span data-icon="arrow-right" aria-hidden="true"></span>
+                    </button>
+                </form>
 
-                <label for="email">
-                    Email
-                </label>
+                <p class="auth-switch">
+                    <span data-i18n="auth.noAccount">New to CampusFix?</span>
+                    <a href="register.html" data-i18n="auth.createAccount">Create a student account</a>
+                </p>
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    required
-                >
-
-
-                <button type="submit">
-                    Login
-                </button>
-
-            </form>
-
-
-            <p class="register-text">
-
-                Don't have an account?
-
-                <a href="register.html">
-                    Create Account
-                </a>
-
-            </p>
-
+                <div class="auth-footer">
+                    <a href="help.html" data-i18n="landing.footerHelp">Help center</a>
+                    <span data-i18n="auth.accessHelp">Need access help? Contact your campus administrator.</span>
+                </div>
+            </div>
         </div>
-
-    </div>
-
-
-    <script>
-
-        // =========================================
-        // LOGIN FORM
-        // =========================================
-
-        document
-            .getElementById("loginForm")
-            .addEventListener(
-                "submit",
-                async function (event) {
-
-                    event.preventDefault();
-
-
-                    const email =
-                        document
-                            .getElementById("email")
-                            .value
-                            .trim();
-
-
-                    const password =
-                        document
-                            .getElementById("password")
-                            .value;
-
-                    const submitButton =
-                        event.currentTarget.querySelector(
-                            "button[type=submit]"
-                        );
-
-
-                    if (!email || !password) {
-
-                        alert(
-                            "Please fill all fields."
-                        );
-
-                        return;
-
-                    }
-
-
-                    try {
-
-                        submitButton.disabled = true;
-
-                        const response =
-                            await fetch(
-                                "/api/login",
-                                {
-
-                                    method: "POST",
-
-                                    headers: {
-
-                                        "Content-Type":
-                                            "application/json"
-
-                                    },
-
-                                    body:
-                                        JSON.stringify({
-
-                                            email:
-                                                email,
-
-                                            password:
-                                                password
-
-                                        })
-
-                                }
-                            );
-
-
-                        const data =
-                            await response.json();
-
-
-                        // =========================================
-                        // LOGIN SUCCESS
-                        // =========================================
-
-                        if (response.ok) {
-
-
-                            // Clear old login data first
-
-                            localStorage.removeItem(
-                                "campusfixToken"
-                            );
-
-                            localStorage.removeItem(
-                                "campusfixUser"
-                            );
-
-
-                            // Save NEW token
-
-                            localStorage.setItem(
-                                "campusfixToken",
-                                data.token
-                            );
-
-
-                            // Make sure user data contains role
-
-                            const loggedInUser = {
-
-                                id:
-                                    data.user.id,
-
-                                name:
-                                    data.user.name,
-
-                                email:
-                                    data.user.email,
-
-                                role:
-                                    data.user.role ||
-                                    "student"
-
-                            };
-
-
-                            // Save user
-
-                            localStorage.setItem(
-
-                                "campusfixUser",
-
-                                JSON.stringify(
-                                    loggedInUser
-                                )
-
-                            );
-
-
-                            console.log(
-                                "Logged in user:",
-                                loggedInUser
-                            );
-
-
-                            alert(
-                                "Login successful! ✅"
-                            );
-
-
-                            // =========================================
-                            // ADMIN REDIRECT
-                            // =========================================
-
-                            if (
-                                loggedInUser.role ===
-                                "admin"
-                            ) {
-
-                                window.location.href =
-                                    "admin.html";
-
-                            }
-
-                            // =========================================
-                            // STUDENT REDIRECT
-                            // =========================================
-
-                            else {
-
-                                window.location.href =
-                                    "dashboard.html";
-
-                            }
-
-
-                        }
-
-                        else {
-
-                            alert(
-
-                                data.message ||
-
-                                "Invalid email or password ❌"
-
-                            );
-
-                        }
-
-
-                    }
-
-                    catch (error) {
-
-                        console.error(
-                            "Login Error:",
-                            error
-                        );
-
-
-                        alert(
-                            "Cannot connect to CampusFix server ❌"
-                        );
-
-                    }
-
-                    finally {
-
-                        submitButton.disabled = false;
-
-                    }
-
-                }
-            );
-
-    </script>
-
+    </main>
+</div>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/login.js" defer></script>
 
 </body>
-
 </html>

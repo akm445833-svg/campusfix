@@ -1,0 +1,40 @@
+const FRONTEND_FILES = Object.freeze([
+    "index.html",
+    "login.html",
+    "register.html",
+    "dashboard.html",
+    "complaint.html",
+    "admin.html",
+    "chat.html",
+    "notices.html",
+    "services.html",
+    "profile.html",
+    "help.html",
+    "offline.html",
+    "style.css",
+    "manifest.webmanifest",
+    "sw.js",
+    "icons/icon-192.png",
+    "icons/icon-512.png",
+    "icons/maskable-512.png",
+    "js/icons.js",
+    "js/i18n.js",
+    "js/session.js",
+    "js/shell.js",
+    "js/landing.js",
+    "js/login.js",
+    "js/register.js",
+    "js/dashboard.js",
+    "js/complaint.js",
+    "js/admin.js",
+    "js/operations.js",
+    "js/services.js",
+    "js/notices.js",
+    "js/profile.js",
+    "js/help.js",
+    "js/chat.js"
+]);
+
+module.exports = {
+    FRONTEND_FILES
+};

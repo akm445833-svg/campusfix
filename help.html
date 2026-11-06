@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1f38">
+    <title>Help · CampusFix</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="app-body" data-page="help" data-title-key="nav.help" data-active-nav="nav.help">
+
+<div class="app-shell">
+    <aside class="sidebar" id="appSidebar" aria-label="Sidebar navigation"></aside>
+
+    <div class="app-frame">
+        <header class="topbar" id="appTopbar"></header>
+
+        <main class="page" id="main">
+            <section class="help-hero" aria-labelledby="helpHeading">
+                <span class="eyebrow" data-i18n="nav.help">Help</span>
+                <h1 id="helpHeading" data-i18n="help.title">How can we help?</h1>
+                <p data-i18n="help.subtitle">Answers, guidance, and a direct route to your campus team.</p>
+
+                <div class="help-search">
+                    <span data-icon="search" aria-hidden="true"></span>
+                    <label class="sr-only" for="helpSearch" data-i18n="help.searchPlaceholder">Search help articles…</label>
+                    <input type="search" id="helpSearch" data-i18n-placeholder="help.searchPlaceholder" data-i18n-aria-label="help.searchPlaceholder" autocomplete="off">
+                </div>
+            </section>
+
+            <div class="help-layout">
+                <section class="panel" aria-labelledby="faqTitle">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="faqTitle" data-i18n="help.faqTitle">Frequently asked questions</h2>
+                            <p data-i18n="help.faqSubtitle">Short answers to common questions about reporting and access.</p>
+                        </div>
+                    </div>
+                    <div class="faq-list" id="faqList" aria-live="polite"></div>
+                </section>
+
+                <div class="stack">
+                    <section class="panel contact-card" aria-labelledby="contactTitle">
+                        <h2 id="contactTitle" data-i18n="help.contactTitle">Contact &amp; support</h2>
+                        <p data-i18n="help.contactBody">Reach the right campus channel without leaving CampusFix.</p>
+
+                        <a class="contact-link" href="chat.html">
+                            <span class="contact-icon" data-icon="message" aria-hidden="true"></span>
+                            <span class="contact-link-copy">
+                                <strong data-i18n="help.contactMessages">Message campus staff</strong>
+                                <small data-i18n="help.contactMessagesHint">For account or complaint questions</small>
+                            </span>
+                            <span class="contact-icon" data-icon="arrow-right" aria-hidden="true"></span>
+                        </a>
+
+                        <a class="contact-link" href="notices.html">
+                            <span class="contact-icon" data-icon="megaphone" aria-hidden="true"></span>
+                            <span class="contact-link-copy">
+                                <strong data-i18n="help.contactNotices">Read campus notices</strong>
+                                <small data-i18n="help.contactNoticesHint">Official updates and announcements</small>
+                            </span>
+                            <span class="contact-icon" data-icon="arrow-right" aria-hidden="true"></span>
+                        </a>
+
+                        <a class="contact-link" href="profile.html">
+                            <span class="contact-icon" data-icon="user" aria-hidden="true"></span>
+                            <span class="contact-link-copy">
+                                <strong data-i18n="help.contactProfile">Account settings</strong>
+                                <small data-i18n="help.contactProfileHint">Name, password and preferences</small>
+                            </span>
+                            <span class="contact-icon" data-icon="arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </section>
+
+                    <section class="panel contact-card" aria-labelledby="shortcutsTitle">
+                        <h2 id="shortcutsTitle" data-i18n="help.shortcutsTitle">Keyboard shortcuts</h2>
+                        <p data-i18n="help.shortcutsBody">Move faster with these shortcuts.</p>
+
+                        <ul class="shortcut-list">
+                            <li><span data-i18n="help.shortcutSearch">Focus search</span><kbd>/</kbd></li>
+                            <li><span data-i18n="help.shortcutClose">Close dialogs</span><kbd>Esc</kbd></li>
+                            <li><span data-i18n="help.shortcutHelp">Open help</span><kbd>?</kbd></li>
+                        </ul>
+                    </section>
+
+                    <section class="panel contact-card" aria-labelledby="appHelpTitle">
+                        <h2 id="appHelpTitle" data-i18n="help.installTitle">Use CampusFix like an app</h2>
+                        <p data-i18n="help.installBody">CampusFix is a progressive web app. Install it from your browser for a full-screen experience and static asset caching. Live data still requires a network connection.</p>
+                        <button type="button" class="btn btn-secondary btn-sm" id="helpInstall" hidden>
+                            <span data-icon="download" aria-hidden="true"></span>
+                            <span data-i18n="profile.installButton">Install on this device</span>
+                        </button>
+
+                        <h2 style="margin-top:18px" data-i18n="help.offlineTitle">What works offline?</h2>
+                        <p style="margin-bottom:0" data-i18n="help.offlineBody">The app shell and public pages are cached for offline viewing. Complaint data, notices, and messages are never cached and always require a live connection.</p>
+                    </section>
+
+                    <section class="panel contact-card" aria-labelledby="stillTitle">
+                        <h2 id="stillTitle" data-i18n="help.stillTitle">Still need a person?</h2>
+                        <p data-i18n="help.stillBody">Use Messages to contact available campus staff. If you cannot sign in, contact your campus administrator directly.</p>
+                        <a class="btn btn-primary btn-sm" href="chat.html">
+                            <span data-icon="message" aria-hidden="true"></span>
+                            <span data-i18n="help.contactMessages">Message campus staff</span>
+                        </a>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/shell.js" defer></script>
+<script src="js/help.js" defer></script>
+</body>
+</html>

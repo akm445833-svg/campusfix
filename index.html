@@ -3,196 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CampusFix</title>
-
+    <meta name="theme-color" content="#0b1f38">
+    <meta name="description" content="CampusFix is a smart campus issue-management workspace for students, staff, managers, and administrators.">
+    <title>CampusFix · Smart campus issue management</title>
+    <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="landing-body">
 
-    <header>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to main content</a>
 
-        <div class="logo">
-            CampusFix
-        </div>
+<header class="landing-header">
+    <div class="container landing-header-inner">
+        <a class="landing-logo" href="index.html" aria-label="CampusFix">
+            <span class="brand-mark" data-icon="campus" aria-hidden="true"></span>
+            <span data-public-college>CampusFix</span>
+        </a>
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="login.html">Login</a>
-            <a href="register.html" class="nav-btn">
-                Register
-            </a>
+        <nav class="landing-nav" id="landingNav" aria-label="Main navigation">
+            <a href="#platform" data-i18n="landing.navFeatures">Platform</a>
+            <a href="#workflow" data-i18n="landing.navWorkflow">How it works</a>
+            <a href="#roles" data-i18n="landing.navRoles">Roles</a>
+            <a href="#security" data-i18n="landing.footerResources">Resources</a>
         </nav>
 
-    </header>
+        <div class="landing-actions">
+            <button type="button" class="lang-toggle" id="landingLanguage" data-i18n-aria-label="nav.toggleLanguage" aria-label="Switch language">
+                <span data-icon="globe" aria-hidden="true"></span>
+                <span id="landingLanguageLabel">EN</span>
+            </button>
+            <a class="btn btn-ghost btn-sm" href="login.html" data-i18n="landing.signIn">Sign in</a>
+            <a class="btn btn-primary btn-sm" href="register.html" data-i18n="landing.getStarted">Get started</a>
+            <button type="button" class="btn btn-ghost btn-icon landing-menu-btn" id="landingMenuButton" aria-label="Open navigation" aria-expanded="false" aria-controls="landingNav">
+                <span data-icon="menu" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</header>
 
+<main id="main">
 
-    <main>
-
-        <section class="hero" id="home">
-
-            <div class="hero-content">
-
-                <p class="tag">
-                    🏫 Smart Campus Solution
+    <section class="hero">
+        <div class="container hero-inner">
+            <div class="hero-copy">
+                <p class="eyebrow">
+                    <span data-icon="sparkles" aria-hidden="true"></span>
+                    <span data-i18n="landing.eyebrow">One campus. One clear process.</span>
                 </p>
 
                 <h1>
-                    Make Your Campus
-                    <span>Better.</span>
+                    <span data-i18n="landing.headlinePre">Campus issues,</span><br>
+                    <em data-i18n="landing.headlineHighlight">handled.</em>
                 </h1>
 
-                <p class="description">
-                    Report college problems easily, track their
-                    status and help make your campus better.
-                </p>
+                <p class="hero-lede" data-i18n="landing.lede"></p>
 
-                <div class="buttons">
-
-                    <a href="register.html" class="primary-btn">
-                        Get Started
+                <div class="hero-actions">
+                    <a class="btn btn-primary btn-lg" href="register.html">
+                        <span data-i18n="landing.ctaPrimary">Report an issue</span>
+                        <span data-icon="arrow-right" aria-hidden="true"></span>
                     </a>
-
-                    <a href="login.html" class="secondary-btn">
-                        Login
-                    </a>
-
+                    <a class="btn btn-secondary btn-lg" href="login.html" data-i18n="landing.ctaSecondary">Sign in to your account</a>
                 </div>
 
+                <div class="hero-trust">
+                    <span><span data-icon="shield" aria-hidden="true"></span><span data-i18n="landing.trust1">Role-based access</span></span>
+                    <span><span data-icon="activity" aria-hidden="true"></span><span data-i18n="landing.trust2">Transparent status history</span></span>
+                    <span><span data-icon="map-pin" aria-hidden="true"></span><span data-i18n="landing.trust3">Built for mobile</span></span>
+                </div>
             </div>
 
+            <div class="hero-visual" aria-label="Illustrative product preview">
+                <div class="hero-visual-glow" aria-hidden="true"></div>
 
-            <div class="hero-card">
+                <div class="mock-stack">
+                    <div class="mock-window">
+                        <div class="mock-window-bar" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                            <span data-i18n="landing.previewTitle">CampusFix workspace</span>
+                        </div>
 
-                <div class="card-icon">
-                    🛠️
+                        <div class="mock-window-body">
+                            <div class="mock-side">
+                                <div class="mock-logo-row">
+                                    <span class="brand-mark" data-icon="campus" aria-hidden="true"></span>
+                                    <span>CampusFix</span>
+                                </div>
+                                <div class="mock-nav-item is-active">
+                                    <span data-icon="dashboard" aria-hidden="true"></span>
+                                    <span data-i18n="landing.previewNav1">Overview</span>
+                                </div>
+                                <div class="mock-nav-item">
+                                    <span data-icon="tickets" aria-hidden="true"></span>
+                                    <span data-i18n="landing.previewNav2">Complaints</span>
+                                </div>
+                                <div class="mock-nav-item">
+                                    <span data-icon="megaphone" aria-hidden="true"></span>
+                                    <span data-i18n="landing.previewNav3">Notices</span>
+                                </div>
+                            </div>
+
+                            <div class="mock-main">
+                                <div class="mock-heading">
+                                    <strong data-i18n="landing.previewHeading">Service overview</strong>
+                                    <span data-i18n="landing.previewBadge">Product preview</span>
+                                </div>
+
+                                <div class="mock-kpis" aria-hidden="true">
+                                    <div class="mock-kpi">
+                                        <span data-i18n="dashboard.total">Total complaints</span>
+                                        <strong>24</strong>
+                                        <small data-i18n="landing.previewSub">Sample view</small>
+                                    </div>
+                                    <div class="mock-kpi">
+                                        <span data-i18n="dashboard.open">Open</span>
+                                        <strong>7</strong>
+                                        <small data-i18n="landing.previewQueue">Department queue</small>
+                                    </div>
+                                    <div class="mock-kpi">
+                                        <span data-i18n="dashboard.resolved">Resolved</span>
+                                        <strong>17</strong>
+                                        <small>71%</small>
+                                    </div>
+                                </div>
+
+                                <div class="mock-card">
+                                    <div class="mock-heading">
+                                        <strong data-i18n="landing.previewQueue">Department queue</strong>
+                                    </div>
+                                    <div class="mock-complaint-row">
+                                        <span class="mock-complaint-dot" aria-hidden="true"></span>
+                                        <strong data-i18n="landing.previewComplaint1">Projector not responding</strong>
+                                        <span class="mock-status is-progress" data-i18n="landing.previewStatus1">In progress</span>
+                                    </div>
+                                    <div class="mock-complaint-row">
+                                        <span class="mock-complaint-dot" aria-hidden="true"></span>
+                                        <strong data-i18n="landing.previewComplaint2">Water leak near lab 2</strong>
+                                        <span class="mock-status" data-i18n="landing.previewStatus2">Resolved</span>
+                                    </div>
+                                    <div class="mock-complaint-row">
+                                        <span class="mock-complaint-dot" aria-hidden="true"></span>
+                                        <strong data-i18n="landing.previewComplaint3">Wi-Fi dropping in library</strong>
+                                        <span class="mock-status is-pending" data-i18n="landing.previewStatus3">Assigned</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floating-note">
+                        <span class="icon-wrap" data-icon="check-circle" aria-hidden="true"></span>
+                        <div>
+                            <strong data-i18n="landing.previewNoteTitle">Status history, every time</strong>
+                            <span data-i18n="landing.previewNoteBody">Students and staff see the same verified updates.</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <h2>
-                    Campus Problem?
-                </h2>
+    <section class="logo-strip">
+        <div class="container logo-strip-inner">
+            <span data-i18n="landing.stripTitle">A single, accountable path from report to resolution</span>
+            <span><span data-icon="users" aria-hidden="true"></span><span data-i18n="landing.strip1">Student portal</span></span>
+            <span><span data-icon="building" aria-hidden="true"></span><span data-i18n="landing.strip2">Department queues</span></span>
+            <span><span data-icon="clock" aria-hidden="true"></span><span data-i18n="landing.strip3">SLA visibility</span></span>
+            <span><span data-icon="megaphone" aria-hidden="true"></span><span data-i18n="landing.strip4">Campus notices</span></span>
+        </div>
+    </section>
 
-                <p>
-                    Broken fan, water problem, Wi-Fi issue
-                    or any other campus problem?
-                </p>
-
-                <div class="status">
-                    <span></span>
-                    Easy to Report
-                </div>
-
+    <section class="landing-section" id="platform">
+        <div class="container">
+            <div class="section-intro">
+                <span class="eyebrow" data-i18n="landing.featuresEyebrow">The platform</span>
+                <h2 data-i18n="landing.featuresTitle">Everything needed to close the loop</h2>
+                <p data-i18n="landing.featuresLede"></p>
             </div>
 
-        </section>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="file-text" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature1Title">Structured reporting</h3>
+                    <p data-i18n="landing.feature1Body"></p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="users" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature2Title">Clear accountability</h3>
+                    <p data-i18n="landing.feature2Body"></p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="clock" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature3Title">SLA at a glance</h3>
+                    <p data-i18n="landing.feature3Body"></p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="megaphone" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature4Title">Campus-wide notices</h3>
+                    <p data-i18n="landing.feature4Body"></p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="chart" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature5Title">Real operational data</h3>
+                    <p data-i18n="landing.feature5Body"></p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="shield" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.feature6Title">Private by design</h3>
+                    <p data-i18n="landing.feature6Body"></p>
+                </article>
+            </div>
+        </div>
+    </section>
 
-
-        <section class="features">
-
-            <h2>
-                How CampusFix Works
-            </h2>
-
-            <p class="section-text">
-                A simple way to report and track college problems.
-            </p>
-
-
-            <div class="feature-container">
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        📝
-                    </div>
-
-                    <h3>
-                        Report
-                    </h3>
-
-                    <p>
-                        Submit your campus problem with
-                        details and photos.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🔧
-                    </div>
-
-                    <h3>
-                        Fix
-                    </h3>
-
-                    <p>
-                        The responsible team can work on
-                        the reported problem.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        📊
-                    </div>
-
-                    <h3>
-                        Track
-                    </h3>
-
-                    <p>
-                        Track your complaint from
-                        pending to solved.
-                    </p>
-
-                </div>
-
+    <section class="landing-section is-tinted" id="workflow">
+        <div class="container">
+            <div class="section-intro">
+                <span class="eyebrow" data-i18n="landing.workflowEyebrow">How it works</span>
+                <h2 data-i18n="landing.workflowTitle">A process everyone can follow</h2>
+                <p data-i18n="landing.workflowLede"></p>
             </div>
 
-        </section>
+            <div class="workflow-grid">
+                <article class="workflow-step">
+                    <span class="workflow-icon" data-icon="plus" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.step1Title">Report</h3>
+                    <p data-i18n="landing.step1Body"></p>
+                </article>
+                <article class="workflow-step">
+                    <span class="workflow-icon" data-icon="layers" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.step2Title">Route</h3>
+                    <p data-i18n="landing.step2Body"></p>
+                </article>
+                <article class="workflow-step">
+                    <span class="workflow-icon" data-icon="check-circle" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.step3Title">Resolve</h3>
+                    <p data-i18n="landing.step3Body"></p>
+                </article>
+                <article class="workflow-step">
+                    <span class="workflow-icon" data-icon="rotate-ccw" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.step4Title">Follow through</h3>
+                    <p data-i18n="landing.step4Body"></p>
+                </article>
+            </div>
+        </div>
+    </section>
 
+    <section class="landing-section" id="roles">
+        <div class="container">
+            <div class="section-intro">
+                <span class="eyebrow" data-i18n="landing.rolesEyebrow">Built for every role</span>
+                <h2 data-i18n="landing.rolesTitle">The right view for the right person</h2>
+                <p data-i18n="landing.rolesLede"></p>
+            </div>
 
-        <section class="about" id="about">
+            <div class="roles-grid">
+                <article class="role-card">
+                    <span class="role-tag">
+                        <span data-icon="user" aria-hidden="true"></span>
+                        <span data-i18n="role.student">Student</span>
+                    </span>
+                    <h3 data-i18n="landing.studentTitle">For students</h3>
+                    <p data-i18n="landing.studentBody"></p>
+                    <ul>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.studentPoint1"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.studentPoint2"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.studentPoint3"></span></li>
+                    </ul>
+                </article>
 
-            <h2>
-                About CampusFix
-            </h2>
+                <article class="role-card is-featured">
+                    <span class="role-tag">
+                        <span data-icon="users" aria-hidden="true"></span>
+                        <span data-i18n="role.operations">Operations</span>
+                    </span>
+                    <h3 data-i18n="landing.staffTitle">For staff &amp; managers</h3>
+                    <p data-i18n="landing.staffBody"></p>
+                    <ul>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.staffPoint1"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.staffPoint2"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.staffPoint3"></span></li>
+                    </ul>
+                </article>
 
-            <p>
-                CampusFix is a platform designed to make
-                college problem reporting simple and transparent.
-                Students can report problems and track their
-                progress without repeatedly visiting the office.
-            </p>
+                <article class="role-card">
+                    <span class="role-tag">
+                        <span data-icon="shield" aria-hidden="true"></span>
+                        <span data-i18n="role.admin">Administrator</span>
+                    </span>
+                    <h3 data-i18n="landing.adminTitle">For administrators</h3>
+                    <p data-i18n="landing.adminBody"></p>
+                    <ul>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.adminPoint1"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.adminPoint2"></span></li>
+                        <li><span data-icon="check" aria-hidden="true"></span><span data-i18n="landing.adminPoint3"></span></li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
 
-        </section>
+    <section class="landing-section is-tinted" id="security">
+        <div class="container">
+            <div class="section-intro">
+                <span class="eyebrow" data-i18n="landing.securityEyebrow">Trust &amp; safety</span>
+                <h2 data-i18n="landing.securityTitle">Access that is enforced, not implied</h2>
+                <p data-i18n="landing.securityBody"></p>
+            </div>
 
-    </main>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="lock" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.securityPoint1">HttpOnly session cookies with CSRF origin checks</h3>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="shield-alert" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.securityPoint2">Validated inputs, rate limiting, and security headers</h3>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-icon" data-icon="activity" aria-hidden="true"></span>
+                    <h3 data-i18n="landing.securityPoint3">Audit records for administrative changes</h3>
+                </article>
+            </div>
+        </div>
+    </section>
 
+    <section class="landing-section">
+        <div class="container">
+            <div class="cta-band">
+                <h2 data-i18n="landing.ctaTitle">Give every campus issue a clear next step</h2>
+                <p data-i18n="landing.ctaBody"></p>
+                <div class="hero-actions" style="justify-content:center">
+                    <a class="btn btn-primary btn-lg" href="register.html" data-i18n="landing.ctaButton">Create a student account</a>
+                    <a class="btn btn-secondary btn-lg" href="login.html" data-i18n="landing.signIn">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>
+</main>
 
-        <h3>
-            CampusFix
-        </h3>
+<footer class="landing-footer">
+    <div class="container">
+        <div class="landing-footer-grid">
+            <div class="landing-footer-brand">
+                <a class="landing-logo" href="index.html" aria-label="CampusFix">
+                    <span class="brand-mark" data-icon="campus" aria-hidden="true"></span>
+                    <span data-public-college>CampusFix</span>
+                </a>
+                <p data-i18n="landing.footerBlurb"></p>
+            </div>
 
-        <p>
-            Making campuses better, one problem at a time.
-        </p>
+            <div>
+                <h3 data-i18n="landing.footerProduct">Product</h3>
+                <div class="landing-footer-links">
+                    <a href="#platform" data-i18n="landing.footerPlatform">Platform</a>
+                    <a href="#workflow" data-i18n="landing.footerWorkflow">How it works</a>
+                    <a href="#roles" data-i18n="landing.footerRoles">Roles &amp; access</a>
+                </div>
+            </div>
 
-        <p>
-            © 2026 CampusFix
-        </p>
+            <div>
+                <h3 data-i18n="landing.footerResources">Resources</h3>
+                <div class="landing-footer-links">
+                    <a href="help.html" data-i18n="landing.footerHelp">Help center</a>
+                    <a href="login.html" data-i18n="landing.footerSignIn">Sign in</a>
+                    <a href="register.html" data-i18n="landing.footerRegister">Create account</a>
+                </div>
+            </div>
+        </div>
 
-    </footer>
+        <div class="landing-footer-bottom">
+            <span data-footer-copyright>© 2026 CampusFix. Built for campuses.</span>
+            <span>
+                <span data-icon="lock" aria-hidden="true"></span>
+                <span data-i18n="landing.footerSecure">Secure session · Accessible interface</span>
+            </span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/icons.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/session.js" defer></script>
+<script src="js/landing.js" defer></script>
 
 </body>
 </html>

@@ -1,0 +1,18 @@
+# Keep deployment uploads small. backend/lib is required by the
+# frontend build manifest, so do not exclude the backend directory.
+node_modules
+backend/node_modules
+backend/test
+backend/scripts
+backend/models
+backend/.env
+backups
+www
+.git
+.github
+dist
+coverage
+*.log
+.env
+.env.*
+README*.md
